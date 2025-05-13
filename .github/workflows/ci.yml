@@ -24,7 +24,6 @@ jobs:
 
     - name: Install dependencies
       run: |
-        # Check if the directory exists before running npm install
         if [ -d "./apps/${{ matrix.app }}" ]; then
           npm install
         else
@@ -32,26 +31,47 @@ jobs:
         fi
       working-directory: ./apps/${{ matrix.app }}
 
-    - name: Run Lint
+    - name: Check and Update ESLint Version
       run: |
-             - name: ESLint Code Lint & Fix
-  # You may pin to the exact commit or the version.
-  # uses: permafrost-dev/eslint-docker-ga@0611438792291217c8c826957841d6aba36cfb99
-  uses: permafrost-dev/eslint-docker-ga@v1.0.0
-                 # Check if the lint script exists before running
-        if npm run | grep -q "lint"; then
-          npm run lint
+        REQUIRED_VERSION="8.42.0"
+        INSTALLED_VERSION=$(npx eslint -v | grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+')
+        if [ "$INSTALLED_VERSION" != "$REQUIRED_VERSION" ]; then
+          echo "ESLint version mismatch. Updating to version $REQUIRED_VERSION..."
+          npm install eslint@$REQUIRED_VERSION --save-dev
         else
-          echo "Lint script not found. Skipping..."
+          echo "ESLint version is up-to-date."
         fi
       working-directory: ./apps/${{ matrix.app }}
 
-    - name: Run Tests
+    - name: Check and Update Prettier Version
       run: |
-        # Check if the test script exists before running
-        if npm run | grep -q "test"; then
-          npm run test
+        REQUIRED_VERSION="2.8.8"
+        INSTALLED_VERSION=$(npx prettier -v)
+        if [ "$INSTALLED_VERSION" != "$REQUIRED_VERSION" ]; then
+          echo "Prettier version mismatch. Updating to version $REQUIRED_VERSION..."
+          npm install prettier@$REQUIRED_VERSION --save-dev
         else
-          echo "Test script not found. Skipping..."
+          echo "Prettier version is up-to-date."
         fi
+      working-directory: ./apps/${{ matrix.app }}
+
+    - name: Install Missing Lint or Test Scripts
+      run: |
+        if ! npm run | grep -q "lint"; then
+          echo "Lint script not found. Installing default lint config..."
+          npm set-script lint "eslint . --fix"
+        fi
+        if ! npm run | grep -q "test"; then
+          echo "Test script not found. Installing default test config..."
+          npm set-script test "jest"
+          npm install jest --save-dev
+        fi
+      working-directory: ./apps/${{ matrix.app }}
+
+    - name: Run Lint
+      run: npm run lint
+      working-directory: ./apps/${{ matrix.app }}
+
+    - name: Run Tests
+      run: npm run test
       working-directory: ./apps/${{ matrix.app }}
