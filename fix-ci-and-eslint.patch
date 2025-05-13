@@ -1,0 +1,3239 @@
+From b0a26f689f1dd725f5286ef7d678401126c57d1d Mon Sep 17 00:00:00 2001
+From: patrick craven <patricktssllc@gmail.com>
+Date: Tue, 13 May 2025 03:52:19 -0500
+Subject: [PATCH] go
+
+---
+ .github/workflows/ci.yml                      |  35 +++
+ apps/admin-panel/.env                         |   4 +
+ apps/admin-panel/.env.example                 |   9 +
+ apps/admin-panel/.eslintrc.json               |  14 ++
+ apps/admin-panel/Dockerfile                   |  12 +
+ apps/admin-panel/README.md                    |   3 +
+ apps/admin-panel/package.json                 |  24 ++
+ apps/admin-panel/public/index.html            |   1 +
+ apps/admin-panel/src/App.tsx                  |   1 +
+ apps/admin-panel/src/components/Auth.tsx      |  29 +++
+ apps/admin-panel/src/components/Calendar.tsx  |   5 +
+ .../admin-panel/src/components/ClockInOut.tsx |   5 +
+ apps/admin-panel/src/components/Dashboard.tsx |  45 ++++
+ apps/admin-panel/src/components/Messaging.tsx |   5 +
+ .../src/components/RoleBasedDashboard.tsx     |  40 +++
+ apps/admin-panel/src/config/supabase.ts       |   1 +
+ apps/admin-panel/src/config/theme.ts          |   1 +
+ apps/admin-panel/src/lib/supabase.ts          |   6 +
+ apps/admin-panel/src/main.tsx                 |   1 +
+ apps/admin-panel/src/pages/index.tsx          |  17 ++
+ apps/admin-panel/src/routes.tsx               |   1 +
+ apps/admin-panel/tests/auth.test.tsx          |  11 +
+ apps/admin-panel/tests/dashboard.test.tsx     |  10 +
+ apps/admin-panel/tests/role.test.tsx          |  10 +
+ apps/admin-panel/tests/sanity.test.ts         |   7 +
+ apps/admin-panel/tests/supabaseClient.test.ts |   8 +
+ apps/admin-panel/tsconfig.json                |  16 ++
+ apps/admin-panel/vitest.config.ts             |   8 +
+ apps/dev-tools/.env                           |   4 +
+ apps/dev-tools/.env.example                   |   9 +
+ apps/dev-tools/.eslintrc.json                 |  14 ++
+ apps/dev-tools/Dockerfile                     |  12 +
+ apps/dev-tools/README.md                      |   3 +
+ apps/dev-tools/package.json                   |  24 ++
+ apps/dev-tools/public/index.html              |   1 +
+ apps/dev-tools/src/App.tsx                    |   1 +
+ apps/dev-tools/src/components/Auth.tsx        |  29 +++
+ apps/dev-tools/src/components/Calendar.tsx    |   5 +
+ apps/dev-tools/src/components/ClockInOut.tsx  |   5 +
+ apps/dev-tools/src/components/Dashboard.tsx   |  45 ++++
+ apps/dev-tools/src/components/Messaging.tsx   |   5 +
+ .../src/components/RoleBasedDashboard.tsx     |  40 +++
+ apps/dev-tools/src/config/supabase.ts         |   1 +
+ apps/dev-tools/src/config/theme.ts            |   1 +
+ apps/dev-tools/src/lib/supabase.ts            |   6 +
+ apps/dev-tools/src/main.tsx                   |   1 +
+ apps/dev-tools/src/pages/index.tsx            |  17 ++
+ apps/dev-tools/src/routes.tsx                 |   1 +
+ apps/dev-tools/tests/auth.test.tsx            |  11 +
+ apps/dev-tools/tests/dashboard.test.tsx       |  10 +
+ apps/dev-tools/tests/role.test.tsx            |  10 +
+ apps/dev-tools/tests/sanity.test.ts           |   7 +
+ apps/dev-tools/tests/supabaseClient.test.ts   |   8 +
+ apps/dev-tools/tsconfig.json                  |  16 ++
+ apps/dev-tools/vitest.config.ts               |   8 +
+ apps/messaging-module/.env                    |   4 +
+ apps/messaging-module/.env.example            |   9 +
+ apps/messaging-module/.eslintrc.json          |  14 ++
+ apps/messaging-module/Dockerfile              |  12 +
+ apps/messaging-module/README.md               |   3 +
+ apps/messaging-module/package.json            |  24 ++
+ apps/messaging-module/public/index.html       |   1 +
+ apps/messaging-module/src/App.tsx             |   1 +
+ apps/messaging-module/src/components/Auth.tsx |  29 +++
+ .../src/components/Calendar.tsx               |   5 +
+ .../src/components/ClockInOut.tsx             |   5 +
+ .../src/components/Dashboard.tsx              |  45 ++++
+ .../src/components/Messaging.tsx              |   5 +
+ .../src/components/RoleBasedDashboard.tsx     |  40 +++
+ apps/messaging-module/src/config/supabase.ts  |   1 +
+ apps/messaging-module/src/config/theme.ts     |   1 +
+ apps/messaging-module/src/lib/supabase.ts     |   6 +
+ apps/messaging-module/src/main.tsx            |   1 +
+ apps/messaging-module/src/pages/index.tsx     |  17 ++
+ apps/messaging-module/src/routes.tsx          |   1 +
+ apps/messaging-module/tests/auth.test.tsx     |  11 +
+ .../messaging-module/tests/dashboard.test.tsx |  10 +
+ apps/messaging-module/tests/role.test.tsx     |  10 +
+ apps/messaging-module/tests/sanity.test.ts    |   7 +
+ .../tests/supabaseClient.test.ts              |   8 +
+ apps/messaging-module/tsconfig.json           |  16 ++
+ apps/messaging-module/vitest.config.ts        |   8 +
+ apps/mobile-app/.env                          |   4 +
+ apps/mobile-app/.env.example                  |   9 +
+ apps/mobile-app/.eslintrc.json                |  14 ++
+ apps/mobile-app/Dockerfile                    |  12 +
+ apps/mobile-app/README.md                     |   3 +
+ apps/mobile-app/package.json                  |  24 ++
+ apps/mobile-app/public/index.html             |   1 +
+ apps/mobile-app/src/App.tsx                   |   1 +
+ apps/mobile-app/src/components/Auth.tsx       |  29 +++
+ apps/mobile-app/src/components/Calendar.tsx   |   5 +
+ apps/mobile-app/src/components/ClockInOut.tsx |   5 +
+ apps/mobile-app/src/components/Dashboard.tsx  |  45 ++++
+ apps/mobile-app/src/components/Messaging.tsx  |   5 +
+ .../src/components/RoleBasedDashboard.tsx     |  40 +++
+ apps/mobile-app/src/config/supabase.ts        |   1 +
+ apps/mobile-app/src/config/theme.ts           |   1 +
+ apps/mobile-app/src/lib/supabase.ts           |   6 +
+ apps/mobile-app/src/main.tsx                  |   1 +
+ apps/mobile-app/src/pages/index.tsx           |  17 ++
+ apps/mobile-app/src/routes.tsx                |   1 +
+ apps/mobile-app/tests/auth.test.tsx           |  11 +
+ apps/mobile-app/tests/dashboard.test.tsx      |  10 +
+ apps/mobile-app/tests/role.test.tsx           |  10 +
+ apps/mobile-app/tests/sanity.test.ts          |   7 +
+ apps/mobile-app/tests/supabaseClient.test.ts  |   8 +
+ apps/mobile-app/tsconfig.json                 |  16 ++
+ apps/mobile-app/vitest.config.ts              |   8 +
+ apps/staffflow-core/.env                      |   4 +
+ apps/staffflow-core/.env.example              |   9 +
+ apps/staffflow-core/.eslintrc.json            |  14 ++
+ apps/staffflow-core/Dockerfile                |  12 +
+ apps/staffflow-core/README.md                 |   3 +
+ apps/staffflow-core/package.json              |  24 ++
+ apps/staffflow-core/public/index.html         |   1 +
+ apps/staffflow-core/src/App.tsx               |   1 +
+ apps/staffflow-core/src/components/Auth.tsx   |  29 +++
+ .../src/components/Calendar.tsx               |   5 +
+ .../src/components/ClockInOut.tsx             |   5 +
+ .../src/components/Dashboard.tsx              |  45 ++++
+ .../src/components/Messaging.tsx              |   5 +
+ .../src/components/RoleBasedDashboard.tsx     |  40 +++
+ apps/staffflow-core/src/config/supabase.ts    |   1 +
+ apps/staffflow-core/src/config/theme.ts       |   1 +
+ apps/staffflow-core/src/lib/supabase.ts       |   6 +
+ apps/staffflow-core/src/main.tsx              |   1 +
+ apps/staffflow-core/src/pages/index.tsx       |  17 ++
+ apps/staffflow-core/src/routes.tsx            |   1 +
+ apps/staffflow-core/tests/auth.test.tsx       |  11 +
+ apps/staffflow-core/tests/dashboard.test.tsx  |  10 +
+ apps/staffflow-core/tests/role.test.tsx       |  10 +
+ apps/staffflow-core/tests/sanity.test.ts      |   7 +
+ .../tests/supabaseClient.test.ts              |   8 +
+ apps/staffflow-core/tsconfig.json             |  16 ++
+ apps/staffflow-core/vitest.config.ts          |   8 +
+ public/index.html                             |   1 +
+ shared/errorTranslator.ts                     | 236 ++++++++++++++++++
+ src/components/Navbar.tsx                     |   1 +
+ src/contexts/AuthContext.tsx                  |   1 +
+ src/hooks/useAuth.ts                          |   1 +
+ src/lib/supabaseClient.ts                     |   1 +
+ src/pages/index.tsx                           |   1 +
+ src/utils/helpers.ts                          |   1 +
+ styles/globals.css                            |   1 +
+ supabase_full_config.sql                      | 115 +++++++++
+ supabase_rbac_policies.sql                    |  46 ++++
+ supabase_schema.sql                           |  65 +++++
+ types/user.ts                                 |   1 +
+ 149 files changed, 1976 insertions(+)
+ create mode 100644 .github/workflows/ci.yml
+ create mode 100644 apps/admin-panel/.env
+ create mode 100644 apps/admin-panel/.env.example
+ create mode 100644 apps/admin-panel/.eslintrc.json
+ create mode 100644 apps/admin-panel/Dockerfile
+ create mode 100644 apps/admin-panel/README.md
+ create mode 100644 apps/admin-panel/package.json
+ create mode 100644 apps/admin-panel/public/index.html
+ create mode 100644 apps/admin-panel/src/App.tsx
+ create mode 100644 apps/admin-panel/src/components/Auth.tsx
+ create mode 100644 apps/admin-panel/src/components/Calendar.tsx
+ create mode 100644 apps/admin-panel/src/components/ClockInOut.tsx
+ create mode 100644 apps/admin-panel/src/components/Dashboard.tsx
+ create mode 100644 apps/admin-panel/src/components/Messaging.tsx
+ create mode 100644 apps/admin-panel/src/components/RoleBasedDashboard.tsx
+ create mode 100644 apps/admin-panel/src/config/supabase.ts
+ create mode 100644 apps/admin-panel/src/config/theme.ts
+ create mode 100644 apps/admin-panel/src/lib/supabase.ts
+ create mode 100644 apps/admin-panel/src/main.tsx
+ create mode 100644 apps/admin-panel/src/pages/index.tsx
+ create mode 100644 apps/admin-panel/src/routes.tsx
+ create mode 100644 apps/admin-panel/tests/auth.test.tsx
+ create mode 100644 apps/admin-panel/tests/dashboard.test.tsx
+ create mode 100644 apps/admin-panel/tests/role.test.tsx
+ create mode 100644 apps/admin-panel/tests/sanity.test.ts
+ create mode 100644 apps/admin-panel/tests/supabaseClient.test.ts
+ create mode 100644 apps/admin-panel/tsconfig.json
+ create mode 100644 apps/admin-panel/vitest.config.ts
+ create mode 100644 apps/dev-tools/.env
+ create mode 100644 apps/dev-tools/.env.example
+ create mode 100644 apps/dev-tools/.eslintrc.json
+ create mode 100644 apps/dev-tools/Dockerfile
+ create mode 100644 apps/dev-tools/README.md
+ create mode 100644 apps/dev-tools/package.json
+ create mode 100644 apps/dev-tools/public/index.html
+ create mode 100644 apps/dev-tools/src/App.tsx
+ create mode 100644 apps/dev-tools/src/components/Auth.tsx
+ create mode 100644 apps/dev-tools/src/components/Calendar.tsx
+ create mode 100644 apps/dev-tools/src/components/ClockInOut.tsx
+ create mode 100644 apps/dev-tools/src/components/Dashboard.tsx
+ create mode 100644 apps/dev-tools/src/components/Messaging.tsx
+ create mode 100644 apps/dev-tools/src/components/RoleBasedDashboard.tsx
+ create mode 100644 apps/dev-tools/src/config/supabase.ts
+ create mode 100644 apps/dev-tools/src/config/theme.ts
+ create mode 100644 apps/dev-tools/src/lib/supabase.ts
+ create mode 100644 apps/dev-tools/src/main.tsx
+ create mode 100644 apps/dev-tools/src/pages/index.tsx
+ create mode 100644 apps/dev-tools/src/routes.tsx
+ create mode 100644 apps/dev-tools/tests/auth.test.tsx
+ create mode 100644 apps/dev-tools/tests/dashboard.test.tsx
+ create mode 100644 apps/dev-tools/tests/role.test.tsx
+ create mode 100644 apps/dev-tools/tests/sanity.test.ts
+ create mode 100644 apps/dev-tools/tests/supabaseClient.test.ts
+ create mode 100644 apps/dev-tools/tsconfig.json
+ create mode 100644 apps/dev-tools/vitest.config.ts
+ create mode 100644 apps/messaging-module/.env
+ create mode 100644 apps/messaging-module/.env.example
+ create mode 100644 apps/messaging-module/.eslintrc.json
+ create mode 100644 apps/messaging-module/Dockerfile
+ create mode 100644 apps/messaging-module/README.md
+ create mode 100644 apps/messaging-module/package.json
+ create mode 100644 apps/messaging-module/public/index.html
+ create mode 100644 apps/messaging-module/src/App.tsx
+ create mode 100644 apps/messaging-module/src/components/Auth.tsx
+ create mode 100644 apps/messaging-module/src/components/Calendar.tsx
+ create mode 100644 apps/messaging-module/src/components/ClockInOut.tsx
+ create mode 100644 apps/messaging-module/src/components/Dashboard.tsx
+ create mode 100644 apps/messaging-module/src/components/Messaging.tsx
+ create mode 100644 apps/messaging-module/src/components/RoleBasedDashboard.tsx
+ create mode 100644 apps/messaging-module/src/config/supabase.ts
+ create mode 100644 apps/messaging-module/src/config/theme.ts
+ create mode 100644 apps/messaging-module/src/lib/supabase.ts
+ create mode 100644 apps/messaging-module/src/main.tsx
+ create mode 100644 apps/messaging-module/src/pages/index.tsx
+ create mode 100644 apps/messaging-module/src/routes.tsx
+ create mode 100644 apps/messaging-module/tests/auth.test.tsx
+ create mode 100644 apps/messaging-module/tests/dashboard.test.tsx
+ create mode 100644 apps/messaging-module/tests/role.test.tsx
+ create mode 100644 apps/messaging-module/tests/sanity.test.ts
+ create mode 100644 apps/messaging-module/tests/supabaseClient.test.ts
+ create mode 100644 apps/messaging-module/tsconfig.json
+ create mode 100644 apps/messaging-module/vitest.config.ts
+ create mode 100644 apps/mobile-app/.env
+ create mode 100644 apps/mobile-app/.env.example
+ create mode 100644 apps/mobile-app/.eslintrc.json
+ create mode 100644 apps/mobile-app/Dockerfile
+ create mode 100644 apps/mobile-app/README.md
+ create mode 100644 apps/mobile-app/package.json
+ create mode 100644 apps/mobile-app/public/index.html
+ create mode 100644 apps/mobile-app/src/App.tsx
+ create mode 100644 apps/mobile-app/src/components/Auth.tsx
+ create mode 100644 apps/mobile-app/src/components/Calendar.tsx
+ create mode 100644 apps/mobile-app/src/components/ClockInOut.tsx
+ create mode 100644 apps/mobile-app/src/components/Dashboard.tsx
+ create mode 100644 apps/mobile-app/src/components/Messaging.tsx
+ create mode 100644 apps/mobile-app/src/components/RoleBasedDashboard.tsx
+ create mode 100644 apps/mobile-app/src/config/supabase.ts
+ create mode 100644 apps/mobile-app/src/config/theme.ts
+ create mode 100644 apps/mobile-app/src/lib/supabase.ts
+ create mode 100644 apps/mobile-app/src/main.tsx
+ create mode 100644 apps/mobile-app/src/pages/index.tsx
+ create mode 100644 apps/mobile-app/src/routes.tsx
+ create mode 100644 apps/mobile-app/tests/auth.test.tsx
+ create mode 100644 apps/mobile-app/tests/dashboard.test.tsx
+ create mode 100644 apps/mobile-app/tests/role.test.tsx
+ create mode 100644 apps/mobile-app/tests/sanity.test.ts
+ create mode 100644 apps/mobile-app/tests/supabaseClient.test.ts
+ create mode 100644 apps/mobile-app/tsconfig.json
+ create mode 100644 apps/mobile-app/vitest.config.ts
+ create mode 100644 apps/staffflow-core/.env
+ create mode 100644 apps/staffflow-core/.env.example
+ create mode 100644 apps/staffflow-core/.eslintrc.json
+ create mode 100644 apps/staffflow-core/Dockerfile
+ create mode 100644 apps/staffflow-core/README.md
+ create mode 100644 apps/staffflow-core/package.json
+ create mode 100644 apps/staffflow-core/public/index.html
+ create mode 100644 apps/staffflow-core/src/App.tsx
+ create mode 100644 apps/staffflow-core/src/components/Auth.tsx
+ create mode 100644 apps/staffflow-core/src/components/Calendar.tsx
+ create mode 100644 apps/staffflow-core/src/components/ClockInOut.tsx
+ create mode 100644 apps/staffflow-core/src/components/Dashboard.tsx
+ create mode 100644 apps/staffflow-core/src/components/Messaging.tsx
+ create mode 100644 apps/staffflow-core/src/components/RoleBasedDashboard.tsx
+ create mode 100644 apps/staffflow-core/src/config/supabase.ts
+ create mode 100644 apps/staffflow-core/src/config/theme.ts
+ create mode 100644 apps/staffflow-core/src/lib/supabase.ts
+ create mode 100644 apps/staffflow-core/src/main.tsx
+ create mode 100644 apps/staffflow-core/src/pages/index.tsx
+ create mode 100644 apps/staffflow-core/src/routes.tsx
+ create mode 100644 apps/staffflow-core/tests/auth.test.tsx
+ create mode 100644 apps/staffflow-core/tests/dashboard.test.tsx
+ create mode 100644 apps/staffflow-core/tests/role.test.tsx
+ create mode 100644 apps/staffflow-core/tests/sanity.test.ts
+ create mode 100644 apps/staffflow-core/tests/supabaseClient.test.ts
+ create mode 100644 apps/staffflow-core/tsconfig.json
+ create mode 100644 apps/staffflow-core/vitest.config.ts
+ create mode 100644 public/index.html
+ create mode 100644 shared/errorTranslator.ts
+ create mode 100644 src/components/Navbar.tsx
+ create mode 100644 src/contexts/AuthContext.tsx
+ create mode 100644 src/hooks/useAuth.ts
+ create mode 100644 src/lib/supabaseClient.ts
+ create mode 100644 src/pages/index.tsx
+ create mode 100644 src/utils/helpers.ts
+ create mode 100644 styles/globals.css
+ create mode 100644 supabase_full_config.sql
+ create mode 100644 supabase_rbac_policies.sql
+ create mode 100644 supabase_schema.sql
+ create mode 100644 types/user.ts
+
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+new file mode 100644
+index 0000000..c30f0cf
+--- /dev/null
++++ b/.github/workflows/ci.yml
+@@ -0,0 +1,35 @@
++name: CI
++
++on:
++  push:
++    branches: [ main ]
++  pull_request:
++    branches: [ main ]
++
++jobs:
++  test:
++    runs-on: ubuntu-latest
++    strategy:
++      matrix:
++        app: [staffflow-core, mobile-app, admin-panel, dev-tools, messaging-module]
++
++    steps:
++    - name: Checkout repo
++      uses: actions/checkout@v3
++
++    - name: Setup Node
++      uses: actions/setup-node@v3
++      with:
++        node-version: 18
++
++    - name: Install dependencies
++      run: npm install
++      working-directory: ./apps/${{ matrix.app }}
++
++    - name: Run Lint
++      run: npm run lint
++      working-directory: ./apps/${{ matrix.app }}
++
++    - name: Run Tests
++      run: npm run test
++      working-directory: ./apps/${{ matrix.app }}
+diff --git a/apps/admin-panel/.env b/apps/admin-panel/.env
+new file mode 100644
+index 0000000..74947ec
+--- /dev/null
++++ b/apps/admin-panel/.env
+@@ -0,0 +1,4 @@
++VITE_SUPABASE_URL=https://brcfqlrpvzfiazfllcvi.supabase.co
++VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJyY2ZxbHJwdnpmaWF6ZmxsY3ZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ5MjA2MzAsImV4cCI6MjA2MDQ5NjYzMH0.ww1i6zVmXKroFoy_pnsVG0jGDN8t-qJ0GAcgqHN5Wf0
++DATABASE_URL=
++NODE_ENV=development
+diff --git a/apps/admin-panel/.env.example b/apps/admin-panel/.env.example
+new file mode 100644
+index 0000000..7379c0e
+--- /dev/null
++++ b/apps/admin-panel/.env.example
+@@ -0,0 +1,9 @@
++# Supabase
++VITE_SUPABASE_URL=
++VITE_SUPABASE_ANON_KEY=
++
++# Optional DB (if backend needed)
++DATABASE_URL=
++
++# Environment
++NODE_ENV=development
+diff --git a/apps/admin-panel/.eslintrc.json b/apps/admin-panel/.eslintrc.json
+new file mode 100644
+index 0000000..540ab21
+--- /dev/null
++++ b/apps/admin-panel/.eslintrc.json
+@@ -0,0 +1,14 @@
++{
++  "extends": ["eslint:recommended", "plugin:react/recommended"],
++  "plugins": ["react"],
++  "parserOptions": {
++    "ecmaVersion": "latest",
++    "sourceType": "module",
++    "ecmaFeatures": {
++      "jsx": true
++    }
++  },
++  "rules": {
++    "react/react-in-jsx-scope": "off"
++  }
++}
+\ No newline at end of file
+diff --git a/apps/admin-panel/Dockerfile b/apps/admin-panel/Dockerfile
+new file mode 100644
+index 0000000..d61c65c
+--- /dev/null
++++ b/apps/admin-panel/Dockerfile
+@@ -0,0 +1,12 @@
++# Dockerfile for production build
++FROM node:18-alpine
++
++WORKDIR /app
++
++COPY . .
++
++RUN npm install && npm run build
++
++EXPOSE 5173
++
++CMD ["npm", "run", "preview"]
+diff --git a/apps/admin-panel/README.md b/apps/admin-panel/README.md
+new file mode 100644
+index 0000000..79fdc58
+--- /dev/null
++++ b/apps/admin-panel/README.md
+@@ -0,0 +1,3 @@
++# StaffFlow App
++
++Production-ready hybrid app.
+\ No newline at end of file
+diff --git a/apps/admin-panel/package.json b/apps/admin-panel/package.json
+new file mode 100644
+index 0000000..e657629
+--- /dev/null
++++ b/apps/admin-panel/package.json
+@@ -0,0 +1,24 @@
++{
++  "name": "staffflow-app",
++  "version": "1.0.0",
++  "scripts": {
++    "dev": "vite",
++    "build": "vite build",
++    "preview": "vite preview",
++    "lint": "eslint . --ext .ts,.tsx --fix",
++    "test": "vitest run"
++  },
++  "dependencies": {
++    "react": "^18.2.0",
++    "react-dom": "^18.2.0",
++    "react-router-dom": "^6.12.1",
++    "supabase": "^2.39.3"
++  },
++  "devDependencies": {
++    "eslint": "^8.47.0",
++    "eslint-plugin-react": "^7.32.2",
++    "typescript": "^5.2.2",
++    "vite": "^5.0.0",
++    "vitest": "^1.0.0"
++  }
++}
+\ No newline at end of file
+diff --git a/apps/admin-panel/public/index.html b/apps/admin-panel/public/index.html
+new file mode 100644
+index 0000000..8b27445
+--- /dev/null
++++ b/apps/admin-panel/public/index.html
+@@ -0,0 +1 @@
++<!DOCTYPE html><html><head><title>StaffFlow App</title></head><body><div id='root'></div></body></html>
+\ No newline at end of file
+diff --git a/apps/admin-panel/src/App.tsx b/apps/admin-panel/src/App.tsx
+new file mode 100644
+index 0000000..78bf5f0
+--- /dev/null
++++ b/apps/admin-panel/src/App.tsx
+@@ -0,0 +1 @@
++// Root App component
+\ No newline at end of file
+diff --git a/apps/admin-panel/src/components/Auth.tsx b/apps/admin-panel/src/components/Auth.tsx
+new file mode 100644
+index 0000000..c1195ac
+--- /dev/null
++++ b/apps/admin-panel/src/components/Auth.tsx
+@@ -0,0 +1,29 @@
++import React, { useState } from 'react';
++import { supabase } from '../lib/supabase';
++
++export const Auth = () => {
++  const [email, setEmail] = useState('');
++  const [password, setPassword] = useState('');
++
++  const signIn = async () => {
++    const { error } = await supabase.auth.signInWithPassword({ email, password });
++    if (error) alert(error.message);
++    else alert('Logged in!');
++  };
++
++  const signUp = async () => {
++    const { error } = await supabase.auth.signUp({ email, password });
++    if (error) alert(error.message);
++    else alert('Check your email to confirm.');
++  };
++
++  return (
++    <div className="bg-gray-800 p-4 rounded">
++      <h2 className="text-lg mb-2">Login or Register</h2>
++      <input className="text-black p-1 mb-2 w-full" type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
++      <input className="text-black p-1 mb-2 w-full" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
++      <button className="bg-blue-600 px-4 py-2 mr-2 rounded" onClick={signIn}>Sign In</button>
++      <button className="bg-green-600 px-4 py-2 rounded" onClick={signUp}>Sign Up</button>
++    </div>
++  );
++};
+diff --git a/apps/admin-panel/src/components/Calendar.tsx b/apps/admin-panel/src/components/Calendar.tsx
+new file mode 100644
+index 0000000..9f40c78
+--- /dev/null
++++ b/apps/admin-panel/src/components/Calendar.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const Calendar = () => {
++  return <div className="p-4 text-white bg-gray-800 rounded">📅 Calendar View (Coming Soon)</div>;
++};
+diff --git a/apps/admin-panel/src/components/ClockInOut.tsx b/apps/admin-panel/src/components/ClockInOut.tsx
+new file mode 100644
+index 0000000..954937d
+--- /dev/null
++++ b/apps/admin-panel/src/components/ClockInOut.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const ClockInOut = () => {
++  return <div className="p-4 text-white bg-gray-700 rounded">🕒 Clock In/Out Component</div>;
++};
+diff --git a/apps/admin-panel/src/components/Dashboard.tsx b/apps/admin-panel/src/components/Dashboard.tsx
+new file mode 100644
+index 0000000..c33e9e8
+--- /dev/null
++++ b/apps/admin-panel/src/components/Dashboard.tsx
+@@ -0,0 +1,45 @@
++import React, { useEffect, useState } from 'react';
++import { supabase } from '../lib/supabase';
++
++export const Dashboard = () => {
++  const [user, setUser] = useState(null);
++  const [shifts, setShifts] = useState([]);
++  const [venues, setVenues] = useState([]);
++  const [messages, setMessages] = useState([]);
++
++  useEffect(() => {
++    const fetchUser = async () => {
++      const { data: { user } } = await supabase.auth.getUser();
++      setUser(user);
++    };
++
++    const fetchData = async () => {
++      const { data: s } = await supabase.from('shifts').select('*').limit(5);
++      const { data: v } = await supabase.from('venues').select('*').limit(5);
++      const { data: m } = await supabase.from('messages').select('*').limit(5);
++
++      setShifts(s || []);
++      setVenues(v || []);
++      setMessages(m || []);
++    };
++
++    fetchUser();
++    fetchData();
++  }, []);
++
++  return (
++    <div className="p-4 bg-gray-900 text-white rounded">
++      <h2 className="text-xl font-bold mb-2">📊 Dashboard</h2>
++      <div><strong>User:</strong> {user?.email || 'Not logged in'}</div>
++
++      <h3 className="mt-4 font-semibold">🕒 Shifts</h3>
++      <ul>{shifts.map(s => <li key={s.id}>{s.status} @ {s.start_time}</li>)}</ul>
++
++      <h3 className="mt-4 font-semibold">🏢 Venues</h3>
++      <ul>{venues.map(v => <li key={v.id}>{v.name}</li>)}</ul>
++
++      <h3 className="mt-4 font-semibold">💬 Messages</h3>
++      <ul>{messages.map(m => <li key={m.id}>{m.message}</li>)}</ul>
++    </div>
++  );
++};
+diff --git a/apps/admin-panel/src/components/Messaging.tsx b/apps/admin-panel/src/components/Messaging.tsx
+new file mode 100644
+index 0000000..a9d7169
+--- /dev/null
++++ b/apps/admin-panel/src/components/Messaging.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const Messaging = () => {
++  return <div className="p-4 text-white bg-gray-600 rounded">💬 Messaging Module</div>;
++};
+diff --git a/apps/admin-panel/src/components/RoleBasedDashboard.tsx b/apps/admin-panel/src/components/RoleBasedDashboard.tsx
+new file mode 100644
+index 0000000..dcfe649
+--- /dev/null
++++ b/apps/admin-panel/src/components/RoleBasedDashboard.tsx
+@@ -0,0 +1,40 @@
++import React, { useEffect, useState } from 'react';
++import { supabase } from '../lib/supabase';
++import { Dashboard } from './Dashboard';
++
++export const RoleBasedDashboard = () => {
++  const [role, setRole] = useState<string | null>(null);
++
++  useEffect(() => {
++    const fetchRole = async () => {
++      const { data: { user } } = await supabase.auth.getUser();
++      if (!user) return;
++
++      const { data, error } = await supabase
++        .from('app_users')
++        .select('role')
++        .eq('id', user.id)
++        .single();
++
++      if (error) {
++        console.error('Failed to fetch role:', error.message);
++      } else {
++        setRole(data.role);
++      }
++    };
++
++    fetchRole();
++  }, []);
++
++  if (!role) return <div className="text-white">Loading role...</div>;
++
++  return (
++    <div>
++      <h2 className="text-xl text-white font-bold mb-2">Logged in as: {role}</h2>
++      {role === 'admin' && <Dashboard />}
++      {role === 'manager' && <Dashboard />}
++      {role === 'staff' && <Dashboard />}
++      {role === 'dev' && <Dashboard />}
++    </div>
++  );
++};
+diff --git a/apps/admin-panel/src/config/supabase.ts b/apps/admin-panel/src/config/supabase.ts
+new file mode 100644
+index 0000000..915a6b2
+--- /dev/null
++++ b/apps/admin-panel/src/config/supabase.ts
+@@ -0,0 +1 @@
++// Supabase client setup
+\ No newline at end of file
+diff --git a/apps/admin-panel/src/config/theme.ts b/apps/admin-panel/src/config/theme.ts
+new file mode 100644
+index 0000000..5860f5a
+--- /dev/null
++++ b/apps/admin-panel/src/config/theme.ts
+@@ -0,0 +1 @@
++// Theme config with dark mode toggle
+\ No newline at end of file
+diff --git a/apps/admin-panel/src/lib/supabase.ts b/apps/admin-panel/src/lib/supabase.ts
+new file mode 100644
+index 0000000..733b874
+--- /dev/null
++++ b/apps/admin-panel/src/lib/supabase.ts
+@@ -0,0 +1,6 @@
++import { createClient } from '@supabase/supabase-js';
++
++const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
++const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
++
++export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+diff --git a/apps/admin-panel/src/main.tsx b/apps/admin-panel/src/main.tsx
+new file mode 100644
+index 0000000..3dcd2ac
+--- /dev/null
++++ b/apps/admin-panel/src/main.tsx
+@@ -0,0 +1 @@
++// Entry point
+\ No newline at end of file
+diff --git a/apps/admin-panel/src/pages/index.tsx b/apps/admin-panel/src/pages/index.tsx
+new file mode 100644
+index 0000000..536abd7
+--- /dev/null
++++ b/apps/admin-panel/src/pages/index.tsx
+@@ -0,0 +1,17 @@
++import React from 'react';
++import { Calendar } from '../components/Calendar';
++import { ClockInOut } from '../components/ClockInOut';
++import { Messaging } from '../components/Messaging';
++import { Auth } from '../components/Auth';
++
++export default function HomePage() {
++  return (
++    <div className="space-y-4 p-4 bg-black min-h-screen text-white">
++      <h1 className="text-2xl font-bold">🏢 StaffFlow Dashboard</h1>
++      <Auth />
++      <Calendar />
++      <ClockInOut />
++      <Messaging />
++    </div>
++  );
++}
+diff --git a/apps/admin-panel/src/routes.tsx b/apps/admin-panel/src/routes.tsx
+new file mode 100644
+index 0000000..e19719c
+--- /dev/null
++++ b/apps/admin-panel/src/routes.tsx
+@@ -0,0 +1 @@
++// Routes setup
+\ No newline at end of file
+diff --git a/apps/admin-panel/tests/auth.test.tsx b/apps/admin-panel/tests/auth.test.tsx
+new file mode 100644
+index 0000000..7516f86
+--- /dev/null
++++ b/apps/admin-panel/tests/auth.test.tsx
+@@ -0,0 +1,11 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { Auth } from '../src/components/Auth';
++
++describe('Auth Component', () => {
++  it('renders login form', () => {
++    const { getByPlaceholderText } = render(<Auth />);
++    expect(getByPlaceholderText('Email')).toBeDefined();
++    expect(getByPlaceholderText('Password')).toBeDefined();
++  });
++});
+diff --git a/apps/admin-panel/tests/dashboard.test.tsx b/apps/admin-panel/tests/dashboard.test.tsx
+new file mode 100644
+index 0000000..744ccce
+--- /dev/null
++++ b/apps/admin-panel/tests/dashboard.test.tsx
+@@ -0,0 +1,10 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { Dashboard } from '../src/components/Dashboard';
++
++describe('Dashboard Component', () => {
++  it('renders without crashing', () => {
++    render(<Dashboard />);
++    expect(true).toBe(true);
++  });
++});
+diff --git a/apps/admin-panel/tests/role.test.tsx b/apps/admin-panel/tests/role.test.tsx
+new file mode 100644
+index 0000000..667b48c
+--- /dev/null
++++ b/apps/admin-panel/tests/role.test.tsx
+@@ -0,0 +1,10 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { RoleBasedDashboard } from '../src/components/RoleBasedDashboard';
++
++describe('RoleBasedDashboard', () => {
++  it('renders loading initially', () => {
++    const { getByText } = render(<RoleBasedDashboard />);
++    expect(getByText(/Loading role/i)).toBeDefined();
++  });
++});
+diff --git a/apps/admin-panel/tests/sanity.test.ts b/apps/admin-panel/tests/sanity.test.ts
+new file mode 100644
+index 0000000..c39a3c1
+--- /dev/null
++++ b/apps/admin-panel/tests/sanity.test.ts
+@@ -0,0 +1,7 @@
++import { describe, it, expect } from 'vitest';
++
++describe('Basic sanity test', () => {
++  it('should return true', () => {
++    expect(true).toBe(true);
++  });
++});
+diff --git a/apps/admin-panel/tests/supabaseClient.test.ts b/apps/admin-panel/tests/supabaseClient.test.ts
+new file mode 100644
+index 0000000..0e42666
+--- /dev/null
++++ b/apps/admin-panel/tests/supabaseClient.test.ts
+@@ -0,0 +1,8 @@
++import { describe, it, expect } from 'vitest';
++import { supabase } from '../src/lib/supabase';
++
++describe('Supabase Client', () => {
++  it('is defined', () => {
++    expect(supabase).toBeDefined();
++  });
++});
+diff --git a/apps/admin-panel/tsconfig.json b/apps/admin-panel/tsconfig.json
+new file mode 100644
+index 0000000..b06197d
+--- /dev/null
++++ b/apps/admin-panel/tsconfig.json
+@@ -0,0 +1,16 @@
++{
++  "compilerOptions": {
++    "target": "esnext",
++    "lib": ["dom", "dom.iterable", "esnext"],
++    "allowJs": false,
++    "skipLibCheck": true,
++    "esModuleInterop": true,
++    "module": "esnext",
++    "moduleResolution": "bundler",
++    "resolveJsonModule": true,
++    "isolatedModules": true,
++    "noEmit": true,
++    "jsx": "react-jsx"
++  },
++  "include": ["src"]
++}
+\ No newline at end of file
+diff --git a/apps/admin-panel/vitest.config.ts b/apps/admin-panel/vitest.config.ts
+new file mode 100644
+index 0000000..5270893
+--- /dev/null
++++ b/apps/admin-panel/vitest.config.ts
+@@ -0,0 +1,8 @@
++import { defineConfig } from 'vitest/config';
++
++export default defineConfig({
++  test: {
++    globals: true,
++    environment: 'jsdom',
++  },
++});
+diff --git a/apps/dev-tools/.env b/apps/dev-tools/.env
+new file mode 100644
+index 0000000..74947ec
+--- /dev/null
++++ b/apps/dev-tools/.env
+@@ -0,0 +1,4 @@
++VITE_SUPABASE_URL=https://brcfqlrpvzfiazfllcvi.supabase.co
++VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJyY2ZxbHJwdnpmaWF6ZmxsY3ZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ5MjA2MzAsImV4cCI6MjA2MDQ5NjYzMH0.ww1i6zVmXKroFoy_pnsVG0jGDN8t-qJ0GAcgqHN5Wf0
++DATABASE_URL=
++NODE_ENV=development
+diff --git a/apps/dev-tools/.env.example b/apps/dev-tools/.env.example
+new file mode 100644
+index 0000000..7379c0e
+--- /dev/null
++++ b/apps/dev-tools/.env.example
+@@ -0,0 +1,9 @@
++# Supabase
++VITE_SUPABASE_URL=
++VITE_SUPABASE_ANON_KEY=
++
++# Optional DB (if backend needed)
++DATABASE_URL=
++
++# Environment
++NODE_ENV=development
+diff --git a/apps/dev-tools/.eslintrc.json b/apps/dev-tools/.eslintrc.json
+new file mode 100644
+index 0000000..540ab21
+--- /dev/null
++++ b/apps/dev-tools/.eslintrc.json
+@@ -0,0 +1,14 @@
++{
++  "extends": ["eslint:recommended", "plugin:react/recommended"],
++  "plugins": ["react"],
++  "parserOptions": {
++    "ecmaVersion": "latest",
++    "sourceType": "module",
++    "ecmaFeatures": {
++      "jsx": true
++    }
++  },
++  "rules": {
++    "react/react-in-jsx-scope": "off"
++  }
++}
+\ No newline at end of file
+diff --git a/apps/dev-tools/Dockerfile b/apps/dev-tools/Dockerfile
+new file mode 100644
+index 0000000..d61c65c
+--- /dev/null
++++ b/apps/dev-tools/Dockerfile
+@@ -0,0 +1,12 @@
++# Dockerfile for production build
++FROM node:18-alpine
++
++WORKDIR /app
++
++COPY . .
++
++RUN npm install && npm run build
++
++EXPOSE 5173
++
++CMD ["npm", "run", "preview"]
+diff --git a/apps/dev-tools/README.md b/apps/dev-tools/README.md
+new file mode 100644
+index 0000000..79fdc58
+--- /dev/null
++++ b/apps/dev-tools/README.md
+@@ -0,0 +1,3 @@
++# StaffFlow App
++
++Production-ready hybrid app.
+\ No newline at end of file
+diff --git a/apps/dev-tools/package.json b/apps/dev-tools/package.json
+new file mode 100644
+index 0000000..e657629
+--- /dev/null
++++ b/apps/dev-tools/package.json
+@@ -0,0 +1,24 @@
++{
++  "name": "staffflow-app",
++  "version": "1.0.0",
++  "scripts": {
++    "dev": "vite",
++    "build": "vite build",
++    "preview": "vite preview",
++    "lint": "eslint . --ext .ts,.tsx --fix",
++    "test": "vitest run"
++  },
++  "dependencies": {
++    "react": "^18.2.0",
++    "react-dom": "^18.2.0",
++    "react-router-dom": "^6.12.1",
++    "supabase": "^2.39.3"
++  },
++  "devDependencies": {
++    "eslint": "^8.47.0",
++    "eslint-plugin-react": "^7.32.2",
++    "typescript": "^5.2.2",
++    "vite": "^5.0.0",
++    "vitest": "^1.0.0"
++  }
++}
+\ No newline at end of file
+diff --git a/apps/dev-tools/public/index.html b/apps/dev-tools/public/index.html
+new file mode 100644
+index 0000000..8b27445
+--- /dev/null
++++ b/apps/dev-tools/public/index.html
+@@ -0,0 +1 @@
++<!DOCTYPE html><html><head><title>StaffFlow App</title></head><body><div id='root'></div></body></html>
+\ No newline at end of file
+diff --git a/apps/dev-tools/src/App.tsx b/apps/dev-tools/src/App.tsx
+new file mode 100644
+index 0000000..78bf5f0
+--- /dev/null
++++ b/apps/dev-tools/src/App.tsx
+@@ -0,0 +1 @@
++// Root App component
+\ No newline at end of file
+diff --git a/apps/dev-tools/src/components/Auth.tsx b/apps/dev-tools/src/components/Auth.tsx
+new file mode 100644
+index 0000000..c1195ac
+--- /dev/null
++++ b/apps/dev-tools/src/components/Auth.tsx
+@@ -0,0 +1,29 @@
++import React, { useState } from 'react';
++import { supabase } from '../lib/supabase';
++
++export const Auth = () => {
++  const [email, setEmail] = useState('');
++  const [password, setPassword] = useState('');
++
++  const signIn = async () => {
++    const { error } = await supabase.auth.signInWithPassword({ email, password });
++    if (error) alert(error.message);
++    else alert('Logged in!');
++  };
++
++  const signUp = async () => {
++    const { error } = await supabase.auth.signUp({ email, password });
++    if (error) alert(error.message);
++    else alert('Check your email to confirm.');
++  };
++
++  return (
++    <div className="bg-gray-800 p-4 rounded">
++      <h2 className="text-lg mb-2">Login or Register</h2>
++      <input className="text-black p-1 mb-2 w-full" type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
++      <input className="text-black p-1 mb-2 w-full" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
++      <button className="bg-blue-600 px-4 py-2 mr-2 rounded" onClick={signIn}>Sign In</button>
++      <button className="bg-green-600 px-4 py-2 rounded" onClick={signUp}>Sign Up</button>
++    </div>
++  );
++};
+diff --git a/apps/dev-tools/src/components/Calendar.tsx b/apps/dev-tools/src/components/Calendar.tsx
+new file mode 100644
+index 0000000..9f40c78
+--- /dev/null
++++ b/apps/dev-tools/src/components/Calendar.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const Calendar = () => {
++  return <div className="p-4 text-white bg-gray-800 rounded">📅 Calendar View (Coming Soon)</div>;
++};
+diff --git a/apps/dev-tools/src/components/ClockInOut.tsx b/apps/dev-tools/src/components/ClockInOut.tsx
+new file mode 100644
+index 0000000..954937d
+--- /dev/null
++++ b/apps/dev-tools/src/components/ClockInOut.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const ClockInOut = () => {
++  return <div className="p-4 text-white bg-gray-700 rounded">🕒 Clock In/Out Component</div>;
++};
+diff --git a/apps/dev-tools/src/components/Dashboard.tsx b/apps/dev-tools/src/components/Dashboard.tsx
+new file mode 100644
+index 0000000..c33e9e8
+--- /dev/null
++++ b/apps/dev-tools/src/components/Dashboard.tsx
+@@ -0,0 +1,45 @@
++import React, { useEffect, useState } from 'react';
++import { supabase } from '../lib/supabase';
++
++export const Dashboard = () => {
++  const [user, setUser] = useState(null);
++  const [shifts, setShifts] = useState([]);
++  const [venues, setVenues] = useState([]);
++  const [messages, setMessages] = useState([]);
++
++  useEffect(() => {
++    const fetchUser = async () => {
++      const { data: { user } } = await supabase.auth.getUser();
++      setUser(user);
++    };
++
++    const fetchData = async () => {
++      const { data: s } = await supabase.from('shifts').select('*').limit(5);
++      const { data: v } = await supabase.from('venues').select('*').limit(5);
++      const { data: m } = await supabase.from('messages').select('*').limit(5);
++
++      setShifts(s || []);
++      setVenues(v || []);
++      setMessages(m || []);
++    };
++
++    fetchUser();
++    fetchData();
++  }, []);
++
++  return (
++    <div className="p-4 bg-gray-900 text-white rounded">
++      <h2 className="text-xl font-bold mb-2">📊 Dashboard</h2>
++      <div><strong>User:</strong> {user?.email || 'Not logged in'}</div>
++
++      <h3 className="mt-4 font-semibold">🕒 Shifts</h3>
++      <ul>{shifts.map(s => <li key={s.id}>{s.status} @ {s.start_time}</li>)}</ul>
++
++      <h3 className="mt-4 font-semibold">🏢 Venues</h3>
++      <ul>{venues.map(v => <li key={v.id}>{v.name}</li>)}</ul>
++
++      <h3 className="mt-4 font-semibold">💬 Messages</h3>
++      <ul>{messages.map(m => <li key={m.id}>{m.message}</li>)}</ul>
++    </div>
++  );
++};
+diff --git a/apps/dev-tools/src/components/Messaging.tsx b/apps/dev-tools/src/components/Messaging.tsx
+new file mode 100644
+index 0000000..a9d7169
+--- /dev/null
++++ b/apps/dev-tools/src/components/Messaging.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const Messaging = () => {
++  return <div className="p-4 text-white bg-gray-600 rounded">💬 Messaging Module</div>;
++};
+diff --git a/apps/dev-tools/src/components/RoleBasedDashboard.tsx b/apps/dev-tools/src/components/RoleBasedDashboard.tsx
+new file mode 100644
+index 0000000..dcfe649
+--- /dev/null
++++ b/apps/dev-tools/src/components/RoleBasedDashboard.tsx
+@@ -0,0 +1,40 @@
++import React, { useEffect, useState } from 'react';
++import { supabase } from '../lib/supabase';
++import { Dashboard } from './Dashboard';
++
++export const RoleBasedDashboard = () => {
++  const [role, setRole] = useState<string | null>(null);
++
++  useEffect(() => {
++    const fetchRole = async () => {
++      const { data: { user } } = await supabase.auth.getUser();
++      if (!user) return;
++
++      const { data, error } = await supabase
++        .from('app_users')
++        .select('role')
++        .eq('id', user.id)
++        .single();
++
++      if (error) {
++        console.error('Failed to fetch role:', error.message);
++      } else {
++        setRole(data.role);
++      }
++    };
++
++    fetchRole();
++  }, []);
++
++  if (!role) return <div className="text-white">Loading role...</div>;
++
++  return (
++    <div>
++      <h2 className="text-xl text-white font-bold mb-2">Logged in as: {role}</h2>
++      {role === 'admin' && <Dashboard />}
++      {role === 'manager' && <Dashboard />}
++      {role === 'staff' && <Dashboard />}
++      {role === 'dev' && <Dashboard />}
++    </div>
++  );
++};
+diff --git a/apps/dev-tools/src/config/supabase.ts b/apps/dev-tools/src/config/supabase.ts
+new file mode 100644
+index 0000000..915a6b2
+--- /dev/null
++++ b/apps/dev-tools/src/config/supabase.ts
+@@ -0,0 +1 @@
++// Supabase client setup
+\ No newline at end of file
+diff --git a/apps/dev-tools/src/config/theme.ts b/apps/dev-tools/src/config/theme.ts
+new file mode 100644
+index 0000000..5860f5a
+--- /dev/null
++++ b/apps/dev-tools/src/config/theme.ts
+@@ -0,0 +1 @@
++// Theme config with dark mode toggle
+\ No newline at end of file
+diff --git a/apps/dev-tools/src/lib/supabase.ts b/apps/dev-tools/src/lib/supabase.ts
+new file mode 100644
+index 0000000..733b874
+--- /dev/null
++++ b/apps/dev-tools/src/lib/supabase.ts
+@@ -0,0 +1,6 @@
++import { createClient } from '@supabase/supabase-js';
++
++const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
++const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
++
++export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+diff --git a/apps/dev-tools/src/main.tsx b/apps/dev-tools/src/main.tsx
+new file mode 100644
+index 0000000..3dcd2ac
+--- /dev/null
++++ b/apps/dev-tools/src/main.tsx
+@@ -0,0 +1 @@
++// Entry point
+\ No newline at end of file
+diff --git a/apps/dev-tools/src/pages/index.tsx b/apps/dev-tools/src/pages/index.tsx
+new file mode 100644
+index 0000000..536abd7
+--- /dev/null
++++ b/apps/dev-tools/src/pages/index.tsx
+@@ -0,0 +1,17 @@
++import React from 'react';
++import { Calendar } from '../components/Calendar';
++import { ClockInOut } from '../components/ClockInOut';
++import { Messaging } from '../components/Messaging';
++import { Auth } from '../components/Auth';
++
++export default function HomePage() {
++  return (
++    <div className="space-y-4 p-4 bg-black min-h-screen text-white">
++      <h1 className="text-2xl font-bold">🏢 StaffFlow Dashboard</h1>
++      <Auth />
++      <Calendar />
++      <ClockInOut />
++      <Messaging />
++    </div>
++  );
++}
+diff --git a/apps/dev-tools/src/routes.tsx b/apps/dev-tools/src/routes.tsx
+new file mode 100644
+index 0000000..e19719c
+--- /dev/null
++++ b/apps/dev-tools/src/routes.tsx
+@@ -0,0 +1 @@
++// Routes setup
+\ No newline at end of file
+diff --git a/apps/dev-tools/tests/auth.test.tsx b/apps/dev-tools/tests/auth.test.tsx
+new file mode 100644
+index 0000000..7516f86
+--- /dev/null
++++ b/apps/dev-tools/tests/auth.test.tsx
+@@ -0,0 +1,11 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { Auth } from '../src/components/Auth';
++
++describe('Auth Component', () => {
++  it('renders login form', () => {
++    const { getByPlaceholderText } = render(<Auth />);
++    expect(getByPlaceholderText('Email')).toBeDefined();
++    expect(getByPlaceholderText('Password')).toBeDefined();
++  });
++});
+diff --git a/apps/dev-tools/tests/dashboard.test.tsx b/apps/dev-tools/tests/dashboard.test.tsx
+new file mode 100644
+index 0000000..744ccce
+--- /dev/null
++++ b/apps/dev-tools/tests/dashboard.test.tsx
+@@ -0,0 +1,10 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { Dashboard } from '../src/components/Dashboard';
++
++describe('Dashboard Component', () => {
++  it('renders without crashing', () => {
++    render(<Dashboard />);
++    expect(true).toBe(true);
++  });
++});
+diff --git a/apps/dev-tools/tests/role.test.tsx b/apps/dev-tools/tests/role.test.tsx
+new file mode 100644
+index 0000000..667b48c
+--- /dev/null
++++ b/apps/dev-tools/tests/role.test.tsx
+@@ -0,0 +1,10 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { RoleBasedDashboard } from '../src/components/RoleBasedDashboard';
++
++describe('RoleBasedDashboard', () => {
++  it('renders loading initially', () => {
++    const { getByText } = render(<RoleBasedDashboard />);
++    expect(getByText(/Loading role/i)).toBeDefined();
++  });
++});
+diff --git a/apps/dev-tools/tests/sanity.test.ts b/apps/dev-tools/tests/sanity.test.ts
+new file mode 100644
+index 0000000..c39a3c1
+--- /dev/null
++++ b/apps/dev-tools/tests/sanity.test.ts
+@@ -0,0 +1,7 @@
++import { describe, it, expect } from 'vitest';
++
++describe('Basic sanity test', () => {
++  it('should return true', () => {
++    expect(true).toBe(true);
++  });
++});
+diff --git a/apps/dev-tools/tests/supabaseClient.test.ts b/apps/dev-tools/tests/supabaseClient.test.ts
+new file mode 100644
+index 0000000..0e42666
+--- /dev/null
++++ b/apps/dev-tools/tests/supabaseClient.test.ts
+@@ -0,0 +1,8 @@
++import { describe, it, expect } from 'vitest';
++import { supabase } from '../src/lib/supabase';
++
++describe('Supabase Client', () => {
++  it('is defined', () => {
++    expect(supabase).toBeDefined();
++  });
++});
+diff --git a/apps/dev-tools/tsconfig.json b/apps/dev-tools/tsconfig.json
+new file mode 100644
+index 0000000..b06197d
+--- /dev/null
++++ b/apps/dev-tools/tsconfig.json
+@@ -0,0 +1,16 @@
++{
++  "compilerOptions": {
++    "target": "esnext",
++    "lib": ["dom", "dom.iterable", "esnext"],
++    "allowJs": false,
++    "skipLibCheck": true,
++    "esModuleInterop": true,
++    "module": "esnext",
++    "moduleResolution": "bundler",
++    "resolveJsonModule": true,
++    "isolatedModules": true,
++    "noEmit": true,
++    "jsx": "react-jsx"
++  },
++  "include": ["src"]
++}
+\ No newline at end of file
+diff --git a/apps/dev-tools/vitest.config.ts b/apps/dev-tools/vitest.config.ts
+new file mode 100644
+index 0000000..5270893
+--- /dev/null
++++ b/apps/dev-tools/vitest.config.ts
+@@ -0,0 +1,8 @@
++import { defineConfig } from 'vitest/config';
++
++export default defineConfig({
++  test: {
++    globals: true,
++    environment: 'jsdom',
++  },
++});
+diff --git a/apps/messaging-module/.env b/apps/messaging-module/.env
+new file mode 100644
+index 0000000..74947ec
+--- /dev/null
++++ b/apps/messaging-module/.env
+@@ -0,0 +1,4 @@
++VITE_SUPABASE_URL=https://brcfqlrpvzfiazfllcvi.supabase.co
++VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJyY2ZxbHJwdnpmaWF6ZmxsY3ZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ5MjA2MzAsImV4cCI6MjA2MDQ5NjYzMH0.ww1i6zVmXKroFoy_pnsVG0jGDN8t-qJ0GAcgqHN5Wf0
++DATABASE_URL=
++NODE_ENV=development
+diff --git a/apps/messaging-module/.env.example b/apps/messaging-module/.env.example
+new file mode 100644
+index 0000000..7379c0e
+--- /dev/null
++++ b/apps/messaging-module/.env.example
+@@ -0,0 +1,9 @@
++# Supabase
++VITE_SUPABASE_URL=
++VITE_SUPABASE_ANON_KEY=
++
++# Optional DB (if backend needed)
++DATABASE_URL=
++
++# Environment
++NODE_ENV=development
+diff --git a/apps/messaging-module/.eslintrc.json b/apps/messaging-module/.eslintrc.json
+new file mode 100644
+index 0000000..540ab21
+--- /dev/null
++++ b/apps/messaging-module/.eslintrc.json
+@@ -0,0 +1,14 @@
++{
++  "extends": ["eslint:recommended", "plugin:react/recommended"],
++  "plugins": ["react"],
++  "parserOptions": {
++    "ecmaVersion": "latest",
++    "sourceType": "module",
++    "ecmaFeatures": {
++      "jsx": true
++    }
++  },
++  "rules": {
++    "react/react-in-jsx-scope": "off"
++  }
++}
+\ No newline at end of file
+diff --git a/apps/messaging-module/Dockerfile b/apps/messaging-module/Dockerfile
+new file mode 100644
+index 0000000..d61c65c
+--- /dev/null
++++ b/apps/messaging-module/Dockerfile
+@@ -0,0 +1,12 @@
++# Dockerfile for production build
++FROM node:18-alpine
++
++WORKDIR /app
++
++COPY . .
++
++RUN npm install && npm run build
++
++EXPOSE 5173
++
++CMD ["npm", "run", "preview"]
+diff --git a/apps/messaging-module/README.md b/apps/messaging-module/README.md
+new file mode 100644
+index 0000000..79fdc58
+--- /dev/null
++++ b/apps/messaging-module/README.md
+@@ -0,0 +1,3 @@
++# StaffFlow App
++
++Production-ready hybrid app.
+\ No newline at end of file
+diff --git a/apps/messaging-module/package.json b/apps/messaging-module/package.json
+new file mode 100644
+index 0000000..e657629
+--- /dev/null
++++ b/apps/messaging-module/package.json
+@@ -0,0 +1,24 @@
++{
++  "name": "staffflow-app",
++  "version": "1.0.0",
++  "scripts": {
++    "dev": "vite",
++    "build": "vite build",
++    "preview": "vite preview",
++    "lint": "eslint . --ext .ts,.tsx --fix",
++    "test": "vitest run"
++  },
++  "dependencies": {
++    "react": "^18.2.0",
++    "react-dom": "^18.2.0",
++    "react-router-dom": "^6.12.1",
++    "supabase": "^2.39.3"
++  },
++  "devDependencies": {
++    "eslint": "^8.47.0",
++    "eslint-plugin-react": "^7.32.2",
++    "typescript": "^5.2.2",
++    "vite": "^5.0.0",
++    "vitest": "^1.0.0"
++  }
++}
+\ No newline at end of file
+diff --git a/apps/messaging-module/public/index.html b/apps/messaging-module/public/index.html
+new file mode 100644
+index 0000000..8b27445
+--- /dev/null
++++ b/apps/messaging-module/public/index.html
+@@ -0,0 +1 @@
++<!DOCTYPE html><html><head><title>StaffFlow App</title></head><body><div id='root'></div></body></html>
+\ No newline at end of file
+diff --git a/apps/messaging-module/src/App.tsx b/apps/messaging-module/src/App.tsx
+new file mode 100644
+index 0000000..78bf5f0
+--- /dev/null
++++ b/apps/messaging-module/src/App.tsx
+@@ -0,0 +1 @@
++// Root App component
+\ No newline at end of file
+diff --git a/apps/messaging-module/src/components/Auth.tsx b/apps/messaging-module/src/components/Auth.tsx
+new file mode 100644
+index 0000000..c1195ac
+--- /dev/null
++++ b/apps/messaging-module/src/components/Auth.tsx
+@@ -0,0 +1,29 @@
++import React, { useState } from 'react';
++import { supabase } from '../lib/supabase';
++
++export const Auth = () => {
++  const [email, setEmail] = useState('');
++  const [password, setPassword] = useState('');
++
++  const signIn = async () => {
++    const { error } = await supabase.auth.signInWithPassword({ email, password });
++    if (error) alert(error.message);
++    else alert('Logged in!');
++  };
++
++  const signUp = async () => {
++    const { error } = await supabase.auth.signUp({ email, password });
++    if (error) alert(error.message);
++    else alert('Check your email to confirm.');
++  };
++
++  return (
++    <div className="bg-gray-800 p-4 rounded">
++      <h2 className="text-lg mb-2">Login or Register</h2>
++      <input className="text-black p-1 mb-2 w-full" type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
++      <input className="text-black p-1 mb-2 w-full" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
++      <button className="bg-blue-600 px-4 py-2 mr-2 rounded" onClick={signIn}>Sign In</button>
++      <button className="bg-green-600 px-4 py-2 rounded" onClick={signUp}>Sign Up</button>
++    </div>
++  );
++};
+diff --git a/apps/messaging-module/src/components/Calendar.tsx b/apps/messaging-module/src/components/Calendar.tsx
+new file mode 100644
+index 0000000..9f40c78
+--- /dev/null
++++ b/apps/messaging-module/src/components/Calendar.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const Calendar = () => {
++  return <div className="p-4 text-white bg-gray-800 rounded">📅 Calendar View (Coming Soon)</div>;
++};
+diff --git a/apps/messaging-module/src/components/ClockInOut.tsx b/apps/messaging-module/src/components/ClockInOut.tsx
+new file mode 100644
+index 0000000..954937d
+--- /dev/null
++++ b/apps/messaging-module/src/components/ClockInOut.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const ClockInOut = () => {
++  return <div className="p-4 text-white bg-gray-700 rounded">🕒 Clock In/Out Component</div>;
++};
+diff --git a/apps/messaging-module/src/components/Dashboard.tsx b/apps/messaging-module/src/components/Dashboard.tsx
+new file mode 100644
+index 0000000..c33e9e8
+--- /dev/null
++++ b/apps/messaging-module/src/components/Dashboard.tsx
+@@ -0,0 +1,45 @@
++import React, { useEffect, useState } from 'react';
++import { supabase } from '../lib/supabase';
++
++export const Dashboard = () => {
++  const [user, setUser] = useState(null);
++  const [shifts, setShifts] = useState([]);
++  const [venues, setVenues] = useState([]);
++  const [messages, setMessages] = useState([]);
++
++  useEffect(() => {
++    const fetchUser = async () => {
++      const { data: { user } } = await supabase.auth.getUser();
++      setUser(user);
++    };
++
++    const fetchData = async () => {
++      const { data: s } = await supabase.from('shifts').select('*').limit(5);
++      const { data: v } = await supabase.from('venues').select('*').limit(5);
++      const { data: m } = await supabase.from('messages').select('*').limit(5);
++
++      setShifts(s || []);
++      setVenues(v || []);
++      setMessages(m || []);
++    };
++
++    fetchUser();
++    fetchData();
++  }, []);
++
++  return (
++    <div className="p-4 bg-gray-900 text-white rounded">
++      <h2 className="text-xl font-bold mb-2">📊 Dashboard</h2>
++      <div><strong>User:</strong> {user?.email || 'Not logged in'}</div>
++
++      <h3 className="mt-4 font-semibold">🕒 Shifts</h3>
++      <ul>{shifts.map(s => <li key={s.id}>{s.status} @ {s.start_time}</li>)}</ul>
++
++      <h3 className="mt-4 font-semibold">🏢 Venues</h3>
++      <ul>{venues.map(v => <li key={v.id}>{v.name}</li>)}</ul>
++
++      <h3 className="mt-4 font-semibold">💬 Messages</h3>
++      <ul>{messages.map(m => <li key={m.id}>{m.message}</li>)}</ul>
++    </div>
++  );
++};
+diff --git a/apps/messaging-module/src/components/Messaging.tsx b/apps/messaging-module/src/components/Messaging.tsx
+new file mode 100644
+index 0000000..a9d7169
+--- /dev/null
++++ b/apps/messaging-module/src/components/Messaging.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const Messaging = () => {
++  return <div className="p-4 text-white bg-gray-600 rounded">💬 Messaging Module</div>;
++};
+diff --git a/apps/messaging-module/src/components/RoleBasedDashboard.tsx b/apps/messaging-module/src/components/RoleBasedDashboard.tsx
+new file mode 100644
+index 0000000..dcfe649
+--- /dev/null
++++ b/apps/messaging-module/src/components/RoleBasedDashboard.tsx
+@@ -0,0 +1,40 @@
++import React, { useEffect, useState } from 'react';
++import { supabase } from '../lib/supabase';
++import { Dashboard } from './Dashboard';
++
++export const RoleBasedDashboard = () => {
++  const [role, setRole] = useState<string | null>(null);
++
++  useEffect(() => {
++    const fetchRole = async () => {
++      const { data: { user } } = await supabase.auth.getUser();
++      if (!user) return;
++
++      const { data, error } = await supabase
++        .from('app_users')
++        .select('role')
++        .eq('id', user.id)
++        .single();
++
++      if (error) {
++        console.error('Failed to fetch role:', error.message);
++      } else {
++        setRole(data.role);
++      }
++    };
++
++    fetchRole();
++  }, []);
++
++  if (!role) return <div className="text-white">Loading role...</div>;
++
++  return (
++    <div>
++      <h2 className="text-xl text-white font-bold mb-2">Logged in as: {role}</h2>
++      {role === 'admin' && <Dashboard />}
++      {role === 'manager' && <Dashboard />}
++      {role === 'staff' && <Dashboard />}
++      {role === 'dev' && <Dashboard />}
++    </div>
++  );
++};
+diff --git a/apps/messaging-module/src/config/supabase.ts b/apps/messaging-module/src/config/supabase.ts
+new file mode 100644
+index 0000000..915a6b2
+--- /dev/null
++++ b/apps/messaging-module/src/config/supabase.ts
+@@ -0,0 +1 @@
++// Supabase client setup
+\ No newline at end of file
+diff --git a/apps/messaging-module/src/config/theme.ts b/apps/messaging-module/src/config/theme.ts
+new file mode 100644
+index 0000000..5860f5a
+--- /dev/null
++++ b/apps/messaging-module/src/config/theme.ts
+@@ -0,0 +1 @@
++// Theme config with dark mode toggle
+\ No newline at end of file
+diff --git a/apps/messaging-module/src/lib/supabase.ts b/apps/messaging-module/src/lib/supabase.ts
+new file mode 100644
+index 0000000..733b874
+--- /dev/null
++++ b/apps/messaging-module/src/lib/supabase.ts
+@@ -0,0 +1,6 @@
++import { createClient } from '@supabase/supabase-js';
++
++const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
++const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
++
++export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+diff --git a/apps/messaging-module/src/main.tsx b/apps/messaging-module/src/main.tsx
+new file mode 100644
+index 0000000..3dcd2ac
+--- /dev/null
++++ b/apps/messaging-module/src/main.tsx
+@@ -0,0 +1 @@
++// Entry point
+\ No newline at end of file
+diff --git a/apps/messaging-module/src/pages/index.tsx b/apps/messaging-module/src/pages/index.tsx
+new file mode 100644
+index 0000000..536abd7
+--- /dev/null
++++ b/apps/messaging-module/src/pages/index.tsx
+@@ -0,0 +1,17 @@
++import React from 'react';
++import { Calendar } from '../components/Calendar';
++import { ClockInOut } from '../components/ClockInOut';
++import { Messaging } from '../components/Messaging';
++import { Auth } from '../components/Auth';
++
++export default function HomePage() {
++  return (
++    <div className="space-y-4 p-4 bg-black min-h-screen text-white">
++      <h1 className="text-2xl font-bold">🏢 StaffFlow Dashboard</h1>
++      <Auth />
++      <Calendar />
++      <ClockInOut />
++      <Messaging />
++    </div>
++  );
++}
+diff --git a/apps/messaging-module/src/routes.tsx b/apps/messaging-module/src/routes.tsx
+new file mode 100644
+index 0000000..e19719c
+--- /dev/null
++++ b/apps/messaging-module/src/routes.tsx
+@@ -0,0 +1 @@
++// Routes setup
+\ No newline at end of file
+diff --git a/apps/messaging-module/tests/auth.test.tsx b/apps/messaging-module/tests/auth.test.tsx
+new file mode 100644
+index 0000000..7516f86
+--- /dev/null
++++ b/apps/messaging-module/tests/auth.test.tsx
+@@ -0,0 +1,11 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { Auth } from '../src/components/Auth';
++
++describe('Auth Component', () => {
++  it('renders login form', () => {
++    const { getByPlaceholderText } = render(<Auth />);
++    expect(getByPlaceholderText('Email')).toBeDefined();
++    expect(getByPlaceholderText('Password')).toBeDefined();
++  });
++});
+diff --git a/apps/messaging-module/tests/dashboard.test.tsx b/apps/messaging-module/tests/dashboard.test.tsx
+new file mode 100644
+index 0000000..744ccce
+--- /dev/null
++++ b/apps/messaging-module/tests/dashboard.test.tsx
+@@ -0,0 +1,10 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { Dashboard } from '../src/components/Dashboard';
++
++describe('Dashboard Component', () => {
++  it('renders without crashing', () => {
++    render(<Dashboard />);
++    expect(true).toBe(true);
++  });
++});
+diff --git a/apps/messaging-module/tests/role.test.tsx b/apps/messaging-module/tests/role.test.tsx
+new file mode 100644
+index 0000000..667b48c
+--- /dev/null
++++ b/apps/messaging-module/tests/role.test.tsx
+@@ -0,0 +1,10 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { RoleBasedDashboard } from '../src/components/RoleBasedDashboard';
++
++describe('RoleBasedDashboard', () => {
++  it('renders loading initially', () => {
++    const { getByText } = render(<RoleBasedDashboard />);
++    expect(getByText(/Loading role/i)).toBeDefined();
++  });
++});
+diff --git a/apps/messaging-module/tests/sanity.test.ts b/apps/messaging-module/tests/sanity.test.ts
+new file mode 100644
+index 0000000..c39a3c1
+--- /dev/null
++++ b/apps/messaging-module/tests/sanity.test.ts
+@@ -0,0 +1,7 @@
++import { describe, it, expect } from 'vitest';
++
++describe('Basic sanity test', () => {
++  it('should return true', () => {
++    expect(true).toBe(true);
++  });
++});
+diff --git a/apps/messaging-module/tests/supabaseClient.test.ts b/apps/messaging-module/tests/supabaseClient.test.ts
+new file mode 100644
+index 0000000..0e42666
+--- /dev/null
++++ b/apps/messaging-module/tests/supabaseClient.test.ts
+@@ -0,0 +1,8 @@
++import { describe, it, expect } from 'vitest';
++import { supabase } from '../src/lib/supabase';
++
++describe('Supabase Client', () => {
++  it('is defined', () => {
++    expect(supabase).toBeDefined();
++  });
++});
+diff --git a/apps/messaging-module/tsconfig.json b/apps/messaging-module/tsconfig.json
+new file mode 100644
+index 0000000..b06197d
+--- /dev/null
++++ b/apps/messaging-module/tsconfig.json
+@@ -0,0 +1,16 @@
++{
++  "compilerOptions": {
++    "target": "esnext",
++    "lib": ["dom", "dom.iterable", "esnext"],
++    "allowJs": false,
++    "skipLibCheck": true,
++    "esModuleInterop": true,
++    "module": "esnext",
++    "moduleResolution": "bundler",
++    "resolveJsonModule": true,
++    "isolatedModules": true,
++    "noEmit": true,
++    "jsx": "react-jsx"
++  },
++  "include": ["src"]
++}
+\ No newline at end of file
+diff --git a/apps/messaging-module/vitest.config.ts b/apps/messaging-module/vitest.config.ts
+new file mode 100644
+index 0000000..5270893
+--- /dev/null
++++ b/apps/messaging-module/vitest.config.ts
+@@ -0,0 +1,8 @@
++import { defineConfig } from 'vitest/config';
++
++export default defineConfig({
++  test: {
++    globals: true,
++    environment: 'jsdom',
++  },
++});
+diff --git a/apps/mobile-app/.env b/apps/mobile-app/.env
+new file mode 100644
+index 0000000..74947ec
+--- /dev/null
++++ b/apps/mobile-app/.env
+@@ -0,0 +1,4 @@
++VITE_SUPABASE_URL=https://brcfqlrpvzfiazfllcvi.supabase.co
++VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJyY2ZxbHJwdnpmaWF6ZmxsY3ZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ5MjA2MzAsImV4cCI6MjA2MDQ5NjYzMH0.ww1i6zVmXKroFoy_pnsVG0jGDN8t-qJ0GAcgqHN5Wf0
++DATABASE_URL=
++NODE_ENV=development
+diff --git a/apps/mobile-app/.env.example b/apps/mobile-app/.env.example
+new file mode 100644
+index 0000000..7379c0e
+--- /dev/null
++++ b/apps/mobile-app/.env.example
+@@ -0,0 +1,9 @@
++# Supabase
++VITE_SUPABASE_URL=
++VITE_SUPABASE_ANON_KEY=
++
++# Optional DB (if backend needed)
++DATABASE_URL=
++
++# Environment
++NODE_ENV=development
+diff --git a/apps/mobile-app/.eslintrc.json b/apps/mobile-app/.eslintrc.json
+new file mode 100644
+index 0000000..540ab21
+--- /dev/null
++++ b/apps/mobile-app/.eslintrc.json
+@@ -0,0 +1,14 @@
++{
++  "extends": ["eslint:recommended", "plugin:react/recommended"],
++  "plugins": ["react"],
++  "parserOptions": {
++    "ecmaVersion": "latest",
++    "sourceType": "module",
++    "ecmaFeatures": {
++      "jsx": true
++    }
++  },
++  "rules": {
++    "react/react-in-jsx-scope": "off"
++  }
++}
+\ No newline at end of file
+diff --git a/apps/mobile-app/Dockerfile b/apps/mobile-app/Dockerfile
+new file mode 100644
+index 0000000..d61c65c
+--- /dev/null
++++ b/apps/mobile-app/Dockerfile
+@@ -0,0 +1,12 @@
++# Dockerfile for production build
++FROM node:18-alpine
++
++WORKDIR /app
++
++COPY . .
++
++RUN npm install && npm run build
++
++EXPOSE 5173
++
++CMD ["npm", "run", "preview"]
+diff --git a/apps/mobile-app/README.md b/apps/mobile-app/README.md
+new file mode 100644
+index 0000000..79fdc58
+--- /dev/null
++++ b/apps/mobile-app/README.md
+@@ -0,0 +1,3 @@
++# StaffFlow App
++
++Production-ready hybrid app.
+\ No newline at end of file
+diff --git a/apps/mobile-app/package.json b/apps/mobile-app/package.json
+new file mode 100644
+index 0000000..e657629
+--- /dev/null
++++ b/apps/mobile-app/package.json
+@@ -0,0 +1,24 @@
++{
++  "name": "staffflow-app",
++  "version": "1.0.0",
++  "scripts": {
++    "dev": "vite",
++    "build": "vite build",
++    "preview": "vite preview",
++    "lint": "eslint . --ext .ts,.tsx --fix",
++    "test": "vitest run"
++  },
++  "dependencies": {
++    "react": "^18.2.0",
++    "react-dom": "^18.2.0",
++    "react-router-dom": "^6.12.1",
++    "supabase": "^2.39.3"
++  },
++  "devDependencies": {
++    "eslint": "^8.47.0",
++    "eslint-plugin-react": "^7.32.2",
++    "typescript": "^5.2.2",
++    "vite": "^5.0.0",
++    "vitest": "^1.0.0"
++  }
++}
+\ No newline at end of file
+diff --git a/apps/mobile-app/public/index.html b/apps/mobile-app/public/index.html
+new file mode 100644
+index 0000000..8b27445
+--- /dev/null
++++ b/apps/mobile-app/public/index.html
+@@ -0,0 +1 @@
++<!DOCTYPE html><html><head><title>StaffFlow App</title></head><body><div id='root'></div></body></html>
+\ No newline at end of file
+diff --git a/apps/mobile-app/src/App.tsx b/apps/mobile-app/src/App.tsx
+new file mode 100644
+index 0000000..78bf5f0
+--- /dev/null
++++ b/apps/mobile-app/src/App.tsx
+@@ -0,0 +1 @@
++// Root App component
+\ No newline at end of file
+diff --git a/apps/mobile-app/src/components/Auth.tsx b/apps/mobile-app/src/components/Auth.tsx
+new file mode 100644
+index 0000000..c1195ac
+--- /dev/null
++++ b/apps/mobile-app/src/components/Auth.tsx
+@@ -0,0 +1,29 @@
++import React, { useState } from 'react';
++import { supabase } from '../lib/supabase';
++
++export const Auth = () => {
++  const [email, setEmail] = useState('');
++  const [password, setPassword] = useState('');
++
++  const signIn = async () => {
++    const { error } = await supabase.auth.signInWithPassword({ email, password });
++    if (error) alert(error.message);
++    else alert('Logged in!');
++  };
++
++  const signUp = async () => {
++    const { error } = await supabase.auth.signUp({ email, password });
++    if (error) alert(error.message);
++    else alert('Check your email to confirm.');
++  };
++
++  return (
++    <div className="bg-gray-800 p-4 rounded">
++      <h2 className="text-lg mb-2">Login or Register</h2>
++      <input className="text-black p-1 mb-2 w-full" type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
++      <input className="text-black p-1 mb-2 w-full" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
++      <button className="bg-blue-600 px-4 py-2 mr-2 rounded" onClick={signIn}>Sign In</button>
++      <button className="bg-green-600 px-4 py-2 rounded" onClick={signUp}>Sign Up</button>
++    </div>
++  );
++};
+diff --git a/apps/mobile-app/src/components/Calendar.tsx b/apps/mobile-app/src/components/Calendar.tsx
+new file mode 100644
+index 0000000..9f40c78
+--- /dev/null
++++ b/apps/mobile-app/src/components/Calendar.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const Calendar = () => {
++  return <div className="p-4 text-white bg-gray-800 rounded">📅 Calendar View (Coming Soon)</div>;
++};
+diff --git a/apps/mobile-app/src/components/ClockInOut.tsx b/apps/mobile-app/src/components/ClockInOut.tsx
+new file mode 100644
+index 0000000..954937d
+--- /dev/null
++++ b/apps/mobile-app/src/components/ClockInOut.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const ClockInOut = () => {
++  return <div className="p-4 text-white bg-gray-700 rounded">🕒 Clock In/Out Component</div>;
++};
+diff --git a/apps/mobile-app/src/components/Dashboard.tsx b/apps/mobile-app/src/components/Dashboard.tsx
+new file mode 100644
+index 0000000..c33e9e8
+--- /dev/null
++++ b/apps/mobile-app/src/components/Dashboard.tsx
+@@ -0,0 +1,45 @@
++import React, { useEffect, useState } from 'react';
++import { supabase } from '../lib/supabase';
++
++export const Dashboard = () => {
++  const [user, setUser] = useState(null);
++  const [shifts, setShifts] = useState([]);
++  const [venues, setVenues] = useState([]);
++  const [messages, setMessages] = useState([]);
++
++  useEffect(() => {
++    const fetchUser = async () => {
++      const { data: { user } } = await supabase.auth.getUser();
++      setUser(user);
++    };
++
++    const fetchData = async () => {
++      const { data: s } = await supabase.from('shifts').select('*').limit(5);
++      const { data: v } = await supabase.from('venues').select('*').limit(5);
++      const { data: m } = await supabase.from('messages').select('*').limit(5);
++
++      setShifts(s || []);
++      setVenues(v || []);
++      setMessages(m || []);
++    };
++
++    fetchUser();
++    fetchData();
++  }, []);
++
++  return (
++    <div className="p-4 bg-gray-900 text-white rounded">
++      <h2 className="text-xl font-bold mb-2">📊 Dashboard</h2>
++      <div><strong>User:</strong> {user?.email || 'Not logged in'}</div>
++
++      <h3 className="mt-4 font-semibold">🕒 Shifts</h3>
++      <ul>{shifts.map(s => <li key={s.id}>{s.status} @ {s.start_time}</li>)}</ul>
++
++      <h3 className="mt-4 font-semibold">🏢 Venues</h3>
++      <ul>{venues.map(v => <li key={v.id}>{v.name}</li>)}</ul>
++
++      <h3 className="mt-4 font-semibold">💬 Messages</h3>
++      <ul>{messages.map(m => <li key={m.id}>{m.message}</li>)}</ul>
++    </div>
++  );
++};
+diff --git a/apps/mobile-app/src/components/Messaging.tsx b/apps/mobile-app/src/components/Messaging.tsx
+new file mode 100644
+index 0000000..a9d7169
+--- /dev/null
++++ b/apps/mobile-app/src/components/Messaging.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const Messaging = () => {
++  return <div className="p-4 text-white bg-gray-600 rounded">💬 Messaging Module</div>;
++};
+diff --git a/apps/mobile-app/src/components/RoleBasedDashboard.tsx b/apps/mobile-app/src/components/RoleBasedDashboard.tsx
+new file mode 100644
+index 0000000..dcfe649
+--- /dev/null
++++ b/apps/mobile-app/src/components/RoleBasedDashboard.tsx
+@@ -0,0 +1,40 @@
++import React, { useEffect, useState } from 'react';
++import { supabase } from '../lib/supabase';
++import { Dashboard } from './Dashboard';
++
++export const RoleBasedDashboard = () => {
++  const [role, setRole] = useState<string | null>(null);
++
++  useEffect(() => {
++    const fetchRole = async () => {
++      const { data: { user } } = await supabase.auth.getUser();
++      if (!user) return;
++
++      const { data, error } = await supabase
++        .from('app_users')
++        .select('role')
++        .eq('id', user.id)
++        .single();
++
++      if (error) {
++        console.error('Failed to fetch role:', error.message);
++      } else {
++        setRole(data.role);
++      }
++    };
++
++    fetchRole();
++  }, []);
++
++  if (!role) return <div className="text-white">Loading role...</div>;
++
++  return (
++    <div>
++      <h2 className="text-xl text-white font-bold mb-2">Logged in as: {role}</h2>
++      {role === 'admin' && <Dashboard />}
++      {role === 'manager' && <Dashboard />}
++      {role === 'staff' && <Dashboard />}
++      {role === 'dev' && <Dashboard />}
++    </div>
++  );
++};
+diff --git a/apps/mobile-app/src/config/supabase.ts b/apps/mobile-app/src/config/supabase.ts
+new file mode 100644
+index 0000000..915a6b2
+--- /dev/null
++++ b/apps/mobile-app/src/config/supabase.ts
+@@ -0,0 +1 @@
++// Supabase client setup
+\ No newline at end of file
+diff --git a/apps/mobile-app/src/config/theme.ts b/apps/mobile-app/src/config/theme.ts
+new file mode 100644
+index 0000000..5860f5a
+--- /dev/null
++++ b/apps/mobile-app/src/config/theme.ts
+@@ -0,0 +1 @@
++// Theme config with dark mode toggle
+\ No newline at end of file
+diff --git a/apps/mobile-app/src/lib/supabase.ts b/apps/mobile-app/src/lib/supabase.ts
+new file mode 100644
+index 0000000..733b874
+--- /dev/null
++++ b/apps/mobile-app/src/lib/supabase.ts
+@@ -0,0 +1,6 @@
++import { createClient } from '@supabase/supabase-js';
++
++const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
++const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
++
++export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+diff --git a/apps/mobile-app/src/main.tsx b/apps/mobile-app/src/main.tsx
+new file mode 100644
+index 0000000..3dcd2ac
+--- /dev/null
++++ b/apps/mobile-app/src/main.tsx
+@@ -0,0 +1 @@
++// Entry point
+\ No newline at end of file
+diff --git a/apps/mobile-app/src/pages/index.tsx b/apps/mobile-app/src/pages/index.tsx
+new file mode 100644
+index 0000000..536abd7
+--- /dev/null
++++ b/apps/mobile-app/src/pages/index.tsx
+@@ -0,0 +1,17 @@
++import React from 'react';
++import { Calendar } from '../components/Calendar';
++import { ClockInOut } from '../components/ClockInOut';
++import { Messaging } from '../components/Messaging';
++import { Auth } from '../components/Auth';
++
++export default function HomePage() {
++  return (
++    <div className="space-y-4 p-4 bg-black min-h-screen text-white">
++      <h1 className="text-2xl font-bold">🏢 StaffFlow Dashboard</h1>
++      <Auth />
++      <Calendar />
++      <ClockInOut />
++      <Messaging />
++    </div>
++  );
++}
+diff --git a/apps/mobile-app/src/routes.tsx b/apps/mobile-app/src/routes.tsx
+new file mode 100644
+index 0000000..e19719c
+--- /dev/null
++++ b/apps/mobile-app/src/routes.tsx
+@@ -0,0 +1 @@
++// Routes setup
+\ No newline at end of file
+diff --git a/apps/mobile-app/tests/auth.test.tsx b/apps/mobile-app/tests/auth.test.tsx
+new file mode 100644
+index 0000000..7516f86
+--- /dev/null
++++ b/apps/mobile-app/tests/auth.test.tsx
+@@ -0,0 +1,11 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { Auth } from '../src/components/Auth';
++
++describe('Auth Component', () => {
++  it('renders login form', () => {
++    const { getByPlaceholderText } = render(<Auth />);
++    expect(getByPlaceholderText('Email')).toBeDefined();
++    expect(getByPlaceholderText('Password')).toBeDefined();
++  });
++});
+diff --git a/apps/mobile-app/tests/dashboard.test.tsx b/apps/mobile-app/tests/dashboard.test.tsx
+new file mode 100644
+index 0000000..744ccce
+--- /dev/null
++++ b/apps/mobile-app/tests/dashboard.test.tsx
+@@ -0,0 +1,10 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { Dashboard } from '../src/components/Dashboard';
++
++describe('Dashboard Component', () => {
++  it('renders without crashing', () => {
++    render(<Dashboard />);
++    expect(true).toBe(true);
++  });
++});
+diff --git a/apps/mobile-app/tests/role.test.tsx b/apps/mobile-app/tests/role.test.tsx
+new file mode 100644
+index 0000000..667b48c
+--- /dev/null
++++ b/apps/mobile-app/tests/role.test.tsx
+@@ -0,0 +1,10 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { RoleBasedDashboard } from '../src/components/RoleBasedDashboard';
++
++describe('RoleBasedDashboard', () => {
++  it('renders loading initially', () => {
++    const { getByText } = render(<RoleBasedDashboard />);
++    expect(getByText(/Loading role/i)).toBeDefined();
++  });
++});
+diff --git a/apps/mobile-app/tests/sanity.test.ts b/apps/mobile-app/tests/sanity.test.ts
+new file mode 100644
+index 0000000..c39a3c1
+--- /dev/null
++++ b/apps/mobile-app/tests/sanity.test.ts
+@@ -0,0 +1,7 @@
++import { describe, it, expect } from 'vitest';
++
++describe('Basic sanity test', () => {
++  it('should return true', () => {
++    expect(true).toBe(true);
++  });
++});
+diff --git a/apps/mobile-app/tests/supabaseClient.test.ts b/apps/mobile-app/tests/supabaseClient.test.ts
+new file mode 100644
+index 0000000..0e42666
+--- /dev/null
++++ b/apps/mobile-app/tests/supabaseClient.test.ts
+@@ -0,0 +1,8 @@
++import { describe, it, expect } from 'vitest';
++import { supabase } from '../src/lib/supabase';
++
++describe('Supabase Client', () => {
++  it('is defined', () => {
++    expect(supabase).toBeDefined();
++  });
++});
+diff --git a/apps/mobile-app/tsconfig.json b/apps/mobile-app/tsconfig.json
+new file mode 100644
+index 0000000..b06197d
+--- /dev/null
++++ b/apps/mobile-app/tsconfig.json
+@@ -0,0 +1,16 @@
++{
++  "compilerOptions": {
++    "target": "esnext",
++    "lib": ["dom", "dom.iterable", "esnext"],
++    "allowJs": false,
++    "skipLibCheck": true,
++    "esModuleInterop": true,
++    "module": "esnext",
++    "moduleResolution": "bundler",
++    "resolveJsonModule": true,
++    "isolatedModules": true,
++    "noEmit": true,
++    "jsx": "react-jsx"
++  },
++  "include": ["src"]
++}
+\ No newline at end of file
+diff --git a/apps/mobile-app/vitest.config.ts b/apps/mobile-app/vitest.config.ts
+new file mode 100644
+index 0000000..5270893
+--- /dev/null
++++ b/apps/mobile-app/vitest.config.ts
+@@ -0,0 +1,8 @@
++import { defineConfig } from 'vitest/config';
++
++export default defineConfig({
++  test: {
++    globals: true,
++    environment: 'jsdom',
++  },
++});
+diff --git a/apps/staffflow-core/.env b/apps/staffflow-core/.env
+new file mode 100644
+index 0000000..74947ec
+--- /dev/null
++++ b/apps/staffflow-core/.env
+@@ -0,0 +1,4 @@
++VITE_SUPABASE_URL=https://brcfqlrpvzfiazfllcvi.supabase.co
++VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJyY2ZxbHJwdnpmaWF6ZmxsY3ZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ5MjA2MzAsImV4cCI6MjA2MDQ5NjYzMH0.ww1i6zVmXKroFoy_pnsVG0jGDN8t-qJ0GAcgqHN5Wf0
++DATABASE_URL=
++NODE_ENV=development
+diff --git a/apps/staffflow-core/.env.example b/apps/staffflow-core/.env.example
+new file mode 100644
+index 0000000..7379c0e
+--- /dev/null
++++ b/apps/staffflow-core/.env.example
+@@ -0,0 +1,9 @@
++# Supabase
++VITE_SUPABASE_URL=
++VITE_SUPABASE_ANON_KEY=
++
++# Optional DB (if backend needed)
++DATABASE_URL=
++
++# Environment
++NODE_ENV=development
+diff --git a/apps/staffflow-core/.eslintrc.json b/apps/staffflow-core/.eslintrc.json
+new file mode 100644
+index 0000000..540ab21
+--- /dev/null
++++ b/apps/staffflow-core/.eslintrc.json
+@@ -0,0 +1,14 @@
++{
++  "extends": ["eslint:recommended", "plugin:react/recommended"],
++  "plugins": ["react"],
++  "parserOptions": {
++    "ecmaVersion": "latest",
++    "sourceType": "module",
++    "ecmaFeatures": {
++      "jsx": true
++    }
++  },
++  "rules": {
++    "react/react-in-jsx-scope": "off"
++  }
++}
+\ No newline at end of file
+diff --git a/apps/staffflow-core/Dockerfile b/apps/staffflow-core/Dockerfile
+new file mode 100644
+index 0000000..d61c65c
+--- /dev/null
++++ b/apps/staffflow-core/Dockerfile
+@@ -0,0 +1,12 @@
++# Dockerfile for production build
++FROM node:18-alpine
++
++WORKDIR /app
++
++COPY . .
++
++RUN npm install && npm run build
++
++EXPOSE 5173
++
++CMD ["npm", "run", "preview"]
+diff --git a/apps/staffflow-core/README.md b/apps/staffflow-core/README.md
+new file mode 100644
+index 0000000..79fdc58
+--- /dev/null
++++ b/apps/staffflow-core/README.md
+@@ -0,0 +1,3 @@
++# StaffFlow App
++
++Production-ready hybrid app.
+\ No newline at end of file
+diff --git a/apps/staffflow-core/package.json b/apps/staffflow-core/package.json
+new file mode 100644
+index 0000000..e657629
+--- /dev/null
++++ b/apps/staffflow-core/package.json
+@@ -0,0 +1,24 @@
++{
++  "name": "staffflow-app",
++  "version": "1.0.0",
++  "scripts": {
++    "dev": "vite",
++    "build": "vite build",
++    "preview": "vite preview",
++    "lint": "eslint . --ext .ts,.tsx --fix",
++    "test": "vitest run"
++  },
++  "dependencies": {
++    "react": "^18.2.0",
++    "react-dom": "^18.2.0",
++    "react-router-dom": "^6.12.1",
++    "supabase": "^2.39.3"
++  },
++  "devDependencies": {
++    "eslint": "^8.47.0",
++    "eslint-plugin-react": "^7.32.2",
++    "typescript": "^5.2.2",
++    "vite": "^5.0.0",
++    "vitest": "^1.0.0"
++  }
++}
+\ No newline at end of file
+diff --git a/apps/staffflow-core/public/index.html b/apps/staffflow-core/public/index.html
+new file mode 100644
+index 0000000..8b27445
+--- /dev/null
++++ b/apps/staffflow-core/public/index.html
+@@ -0,0 +1 @@
++<!DOCTYPE html><html><head><title>StaffFlow App</title></head><body><div id='root'></div></body></html>
+\ No newline at end of file
+diff --git a/apps/staffflow-core/src/App.tsx b/apps/staffflow-core/src/App.tsx
+new file mode 100644
+index 0000000..78bf5f0
+--- /dev/null
++++ b/apps/staffflow-core/src/App.tsx
+@@ -0,0 +1 @@
++// Root App component
+\ No newline at end of file
+diff --git a/apps/staffflow-core/src/components/Auth.tsx b/apps/staffflow-core/src/components/Auth.tsx
+new file mode 100644
+index 0000000..c1195ac
+--- /dev/null
++++ b/apps/staffflow-core/src/components/Auth.tsx
+@@ -0,0 +1,29 @@
++import React, { useState } from 'react';
++import { supabase } from '../lib/supabase';
++
++export const Auth = () => {
++  const [email, setEmail] = useState('');
++  const [password, setPassword] = useState('');
++
++  const signIn = async () => {
++    const { error } = await supabase.auth.signInWithPassword({ email, password });
++    if (error) alert(error.message);
++    else alert('Logged in!');
++  };
++
++  const signUp = async () => {
++    const { error } = await supabase.auth.signUp({ email, password });
++    if (error) alert(error.message);
++    else alert('Check your email to confirm.');
++  };
++
++  return (
++    <div className="bg-gray-800 p-4 rounded">
++      <h2 className="text-lg mb-2">Login or Register</h2>
++      <input className="text-black p-1 mb-2 w-full" type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
++      <input className="text-black p-1 mb-2 w-full" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
++      <button className="bg-blue-600 px-4 py-2 mr-2 rounded" onClick={signIn}>Sign In</button>
++      <button className="bg-green-600 px-4 py-2 rounded" onClick={signUp}>Sign Up</button>
++    </div>
++  );
++};
+diff --git a/apps/staffflow-core/src/components/Calendar.tsx b/apps/staffflow-core/src/components/Calendar.tsx
+new file mode 100644
+index 0000000..9f40c78
+--- /dev/null
++++ b/apps/staffflow-core/src/components/Calendar.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const Calendar = () => {
++  return <div className="p-4 text-white bg-gray-800 rounded">📅 Calendar View (Coming Soon)</div>;
++};
+diff --git a/apps/staffflow-core/src/components/ClockInOut.tsx b/apps/staffflow-core/src/components/ClockInOut.tsx
+new file mode 100644
+index 0000000..954937d
+--- /dev/null
++++ b/apps/staffflow-core/src/components/ClockInOut.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const ClockInOut = () => {
++  return <div className="p-4 text-white bg-gray-700 rounded">🕒 Clock In/Out Component</div>;
++};
+diff --git a/apps/staffflow-core/src/components/Dashboard.tsx b/apps/staffflow-core/src/components/Dashboard.tsx
+new file mode 100644
+index 0000000..c33e9e8
+--- /dev/null
++++ b/apps/staffflow-core/src/components/Dashboard.tsx
+@@ -0,0 +1,45 @@
++import React, { useEffect, useState } from 'react';
++import { supabase } from '../lib/supabase';
++
++export const Dashboard = () => {
++  const [user, setUser] = useState(null);
++  const [shifts, setShifts] = useState([]);
++  const [venues, setVenues] = useState([]);
++  const [messages, setMessages] = useState([]);
++
++  useEffect(() => {
++    const fetchUser = async () => {
++      const { data: { user } } = await supabase.auth.getUser();
++      setUser(user);
++    };
++
++    const fetchData = async () => {
++      const { data: s } = await supabase.from('shifts').select('*').limit(5);
++      const { data: v } = await supabase.from('venues').select('*').limit(5);
++      const { data: m } = await supabase.from('messages').select('*').limit(5);
++
++      setShifts(s || []);
++      setVenues(v || []);
++      setMessages(m || []);
++    };
++
++    fetchUser();
++    fetchData();
++  }, []);
++
++  return (
++    <div className="p-4 bg-gray-900 text-white rounded">
++      <h2 className="text-xl font-bold mb-2">📊 Dashboard</h2>
++      <div><strong>User:</strong> {user?.email || 'Not logged in'}</div>
++
++      <h3 className="mt-4 font-semibold">🕒 Shifts</h3>
++      <ul>{shifts.map(s => <li key={s.id}>{s.status} @ {s.start_time}</li>)}</ul>
++
++      <h3 className="mt-4 font-semibold">🏢 Venues</h3>
++      <ul>{venues.map(v => <li key={v.id}>{v.name}</li>)}</ul>
++
++      <h3 className="mt-4 font-semibold">💬 Messages</h3>
++      <ul>{messages.map(m => <li key={m.id}>{m.message}</li>)}</ul>
++    </div>
++  );
++};
+diff --git a/apps/staffflow-core/src/components/Messaging.tsx b/apps/staffflow-core/src/components/Messaging.tsx
+new file mode 100644
+index 0000000..a9d7169
+--- /dev/null
++++ b/apps/staffflow-core/src/components/Messaging.tsx
+@@ -0,0 +1,5 @@
++import React from 'react';
++
++export const Messaging = () => {
++  return <div className="p-4 text-white bg-gray-600 rounded">💬 Messaging Module</div>;
++};
+diff --git a/apps/staffflow-core/src/components/RoleBasedDashboard.tsx b/apps/staffflow-core/src/components/RoleBasedDashboard.tsx
+new file mode 100644
+index 0000000..dcfe649
+--- /dev/null
++++ b/apps/staffflow-core/src/components/RoleBasedDashboard.tsx
+@@ -0,0 +1,40 @@
++import React, { useEffect, useState } from 'react';
++import { supabase } from '../lib/supabase';
++import { Dashboard } from './Dashboard';
++
++export const RoleBasedDashboard = () => {
++  const [role, setRole] = useState<string | null>(null);
++
++  useEffect(() => {
++    const fetchRole = async () => {
++      const { data: { user } } = await supabase.auth.getUser();
++      if (!user) return;
++
++      const { data, error } = await supabase
++        .from('app_users')
++        .select('role')
++        .eq('id', user.id)
++        .single();
++
++      if (error) {
++        console.error('Failed to fetch role:', error.message);
++      } else {
++        setRole(data.role);
++      }
++    };
++
++    fetchRole();
++  }, []);
++
++  if (!role) return <div className="text-white">Loading role...</div>;
++
++  return (
++    <div>
++      <h2 className="text-xl text-white font-bold mb-2">Logged in as: {role}</h2>
++      {role === 'admin' && <Dashboard />}
++      {role === 'manager' && <Dashboard />}
++      {role === 'staff' && <Dashboard />}
++      {role === 'dev' && <Dashboard />}
++    </div>
++  );
++};
+diff --git a/apps/staffflow-core/src/config/supabase.ts b/apps/staffflow-core/src/config/supabase.ts
+new file mode 100644
+index 0000000..915a6b2
+--- /dev/null
++++ b/apps/staffflow-core/src/config/supabase.ts
+@@ -0,0 +1 @@
++// Supabase client setup
+\ No newline at end of file
+diff --git a/apps/staffflow-core/src/config/theme.ts b/apps/staffflow-core/src/config/theme.ts
+new file mode 100644
+index 0000000..5860f5a
+--- /dev/null
++++ b/apps/staffflow-core/src/config/theme.ts
+@@ -0,0 +1 @@
++// Theme config with dark mode toggle
+\ No newline at end of file
+diff --git a/apps/staffflow-core/src/lib/supabase.ts b/apps/staffflow-core/src/lib/supabase.ts
+new file mode 100644
+index 0000000..733b874
+--- /dev/null
++++ b/apps/staffflow-core/src/lib/supabase.ts
+@@ -0,0 +1,6 @@
++import { createClient } from '@supabase/supabase-js';
++
++const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
++const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
++
++export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+diff --git a/apps/staffflow-core/src/main.tsx b/apps/staffflow-core/src/main.tsx
+new file mode 100644
+index 0000000..3dcd2ac
+--- /dev/null
++++ b/apps/staffflow-core/src/main.tsx
+@@ -0,0 +1 @@
++// Entry point
+\ No newline at end of file
+diff --git a/apps/staffflow-core/src/pages/index.tsx b/apps/staffflow-core/src/pages/index.tsx
+new file mode 100644
+index 0000000..536abd7
+--- /dev/null
++++ b/apps/staffflow-core/src/pages/index.tsx
+@@ -0,0 +1,17 @@
++import React from 'react';
++import { Calendar } from '../components/Calendar';
++import { ClockInOut } from '../components/ClockInOut';
++import { Messaging } from '../components/Messaging';
++import { Auth } from '../components/Auth';
++
++export default function HomePage() {
++  return (
++    <div className="space-y-4 p-4 bg-black min-h-screen text-white">
++      <h1 className="text-2xl font-bold">🏢 StaffFlow Dashboard</h1>
++      <Auth />
++      <Calendar />
++      <ClockInOut />
++      <Messaging />
++    </div>
++  );
++}
+diff --git a/apps/staffflow-core/src/routes.tsx b/apps/staffflow-core/src/routes.tsx
+new file mode 100644
+index 0000000..e19719c
+--- /dev/null
++++ b/apps/staffflow-core/src/routes.tsx
+@@ -0,0 +1 @@
++// Routes setup
+\ No newline at end of file
+diff --git a/apps/staffflow-core/tests/auth.test.tsx b/apps/staffflow-core/tests/auth.test.tsx
+new file mode 100644
+index 0000000..7516f86
+--- /dev/null
++++ b/apps/staffflow-core/tests/auth.test.tsx
+@@ -0,0 +1,11 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { Auth } from '../src/components/Auth';
++
++describe('Auth Component', () => {
++  it('renders login form', () => {
++    const { getByPlaceholderText } = render(<Auth />);
++    expect(getByPlaceholderText('Email')).toBeDefined();
++    expect(getByPlaceholderText('Password')).toBeDefined();
++  });
++});
+diff --git a/apps/staffflow-core/tests/dashboard.test.tsx b/apps/staffflow-core/tests/dashboard.test.tsx
+new file mode 100644
+index 0000000..744ccce
+--- /dev/null
++++ b/apps/staffflow-core/tests/dashboard.test.tsx
+@@ -0,0 +1,10 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { Dashboard } from '../src/components/Dashboard';
++
++describe('Dashboard Component', () => {
++  it('renders without crashing', () => {
++    render(<Dashboard />);
++    expect(true).toBe(true);
++  });
++});
+diff --git a/apps/staffflow-core/tests/role.test.tsx b/apps/staffflow-core/tests/role.test.tsx
+new file mode 100644
+index 0000000..667b48c
+--- /dev/null
++++ b/apps/staffflow-core/tests/role.test.tsx
+@@ -0,0 +1,10 @@
++import { describe, it, expect } from 'vitest';
++import { render } from '@testing-library/react';
++import { RoleBasedDashboard } from '../src/components/RoleBasedDashboard';
++
++describe('RoleBasedDashboard', () => {
++  it('renders loading initially', () => {
++    const { getByText } = render(<RoleBasedDashboard />);
++    expect(getByText(/Loading role/i)).toBeDefined();
++  });
++});
+diff --git a/apps/staffflow-core/tests/sanity.test.ts b/apps/staffflow-core/tests/sanity.test.ts
+new file mode 100644
+index 0000000..c39a3c1
+--- /dev/null
++++ b/apps/staffflow-core/tests/sanity.test.ts
+@@ -0,0 +1,7 @@
++import { describe, it, expect } from 'vitest';
++
++describe('Basic sanity test', () => {
++  it('should return true', () => {
++    expect(true).toBe(true);
++  });
++});
+diff --git a/apps/staffflow-core/tests/supabaseClient.test.ts b/apps/staffflow-core/tests/supabaseClient.test.ts
+new file mode 100644
+index 0000000..0e42666
+--- /dev/null
++++ b/apps/staffflow-core/tests/supabaseClient.test.ts
+@@ -0,0 +1,8 @@
++import { describe, it, expect } from 'vitest';
++import { supabase } from '../src/lib/supabase';
++
++describe('Supabase Client', () => {
++  it('is defined', () => {
++    expect(supabase).toBeDefined();
++  });
++});
+diff --git a/apps/staffflow-core/tsconfig.json b/apps/staffflow-core/tsconfig.json
+new file mode 100644
+index 0000000..b06197d
+--- /dev/null
++++ b/apps/staffflow-core/tsconfig.json
+@@ -0,0 +1,16 @@
++{
++  "compilerOptions": {
++    "target": "esnext",
++    "lib": ["dom", "dom.iterable", "esnext"],
++    "allowJs": false,
++    "skipLibCheck": true,
++    "esModuleInterop": true,
++    "module": "esnext",
++    "moduleResolution": "bundler",
++    "resolveJsonModule": true,
++    "isolatedModules": true,
++    "noEmit": true,
++    "jsx": "react-jsx"
++  },
++  "include": ["src"]
++}
+\ No newline at end of file
+diff --git a/apps/staffflow-core/vitest.config.ts b/apps/staffflow-core/vitest.config.ts
+new file mode 100644
+index 0000000..5270893
+--- /dev/null
++++ b/apps/staffflow-core/vitest.config.ts
+@@ -0,0 +1,8 @@
++import { defineConfig } from 'vitest/config';
++
++export default defineConfig({
++  test: {
++    globals: true,
++    environment: 'jsdom',
++  },
++});
+diff --git a/public/index.html b/public/index.html
+new file mode 100644
+index 0000000..6815c78
+--- /dev/null
++++ b/public/index.html
+@@ -0,0 +1 @@
++<!-- HTML entry point -->
+\ No newline at end of file
+diff --git a/shared/errorTranslator.ts b/shared/errorTranslator.ts
+new file mode 100644
+index 0000000..60c07ca
+--- /dev/null
++++ b/shared/errorTranslator.ts
+@@ -0,0 +1,236 @@
++/**
++ * Error Translator Utility
++ * Translates technical error messages into more intuitive, human-readable explanations
++ */
++
++export interface ErrorTranslation {
++  originalError: string;
++  friendlyMessage: string;
++  possibleSolutions: string[];
++  severity: 'low' | 'medium' | 'high' | 'critical';
++  documentationLinks?: string[];
++}
++
++// Database of common errors and their translations
++const errorPatterns: Array<{
++  pattern: RegExp;
++  translation: (matches: RegExpMatchArray) => ErrorTranslation;
++}> = [
++  // Database connection errors
++  {
++    pattern: /getaddrinfo\s+ENOTFOUND\s+(.+)/i,
++    translation: (matches) => ({
++      originalError: matches[0],
++      friendlyMessage: `Cannot find the database host "${matches[1]}". The database server might be down or the connection string might be incorrect.`,
++      possibleSolutions: [
++        'Check if the database server is running',
++        'Verify the database connection string',
++        'Make sure your network can reach the database server',
++        'Check for typos in the host name'
++      ],
++      severity: 'high',
++    })
++  },
++  {
++    pattern: /Connection\s+refused/i,
++    translation: () => ({
++      originalError: 'Connection refused',
++      friendlyMessage: 'The database server is refusing connections.',
++      possibleSolutions: [
++        'Check if the database server is running',
++        'Verify that the server is configured to accept connections on the specified port',
++        'Ensure firewall settings allow connections to the database port',
++        'Confirm that the maximum number of database connections hasn\'t been reached'
++      ],
++      severity: 'high',
++    })
++  },
++  // Authentication errors
++  {
++    pattern: /password authentication failed for user "(.+)"/i,
++    translation: (matches) => ({
++      originalError: matches[0],
++      friendlyMessage: `Authentication failed for database user "${matches[1]}". The password might be incorrect.`,
++      possibleSolutions: [
++        'Check that you\'re using the correct password',
++        'Verify that the user has permission to access the database',
++        'Make sure the user hasn\'t been locked out due to too many failed attempts'
++      ],
++      severity: 'high',
++    })
++  },
++  // Permission errors
++  {
++    pattern: /permission denied for table (\w+)/i,
++    translation: (matches) => ({
++      originalError: matches[0],
++      friendlyMessage: `You don't have permission to access the table "${matches[1]}".`,
++      possibleSolutions: [
++        'Check that the database user has proper permissions',
++        'Run "GRANT" statements to give the user access to the table',
++        'Consider connecting with a different user who has the required permissions'
++      ],
++      severity: 'medium',
++    })
++  },
++  // Syntax errors
++  {
++    pattern: /syntax error at or near "(.+)"/i,
++    translation: (matches) => ({
++      originalError: matches[0],
++      friendlyMessage: `There's a SQL syntax error near "${matches[1]}".`,
++      possibleSolutions: [
++        'Check your SQL query for syntax errors',
++        'Make sure all keywords, table names, and field names are spelled correctly',
++        'Verify that you\'re using the correct SQL dialect for your database'
++      ],
++      severity: 'medium',
++    })
++  },
++  // Constraint violations
++  {
++    pattern: /violates unique constraint "(.+)"/i,
++    translation: (matches) => ({
++      originalError: matches[0],
++      friendlyMessage: 'This operation would create a duplicate value for a unique field.',
++      possibleSolutions: [
++        'Check if the record already exists before inserting',
++        'Update the existing record instead of creating a new one',
++        'Use a different value for the unique field'
++      ],
++      severity: 'medium',
++      documentationLinks: [
++        'https://www.postgresql.org/docs/current/ddl-constraints.html'
++      ]
++    })
++  },
++  // Foreign key violations
++  {
++    pattern: /violates foreign key constraint "(.+)"/i,
++    translation: (matches) => ({
++      originalError: matches[0],
++      friendlyMessage: 'This operation references a record that doesn\'t exist in another table.',
++      possibleSolutions: [
++        'Create the referenced record first',
++        'Check if you\'re using the correct foreign key value',
++        'Make sure the referenced record hasn\'t been deleted'
++      ],
++      severity: 'medium',
++      documentationLinks: [
++        'https://www.postgresql.org/docs/current/ddl-constraints.html'
++      ]
++    })
++  },
++  // Default for unrecognized database errors
++  {
++    pattern: /database|db|sql|query|table|column|postgres/i,
++    translation: (matches) => ({
++      originalError: matches[0],
++      friendlyMessage: 'There was an error with the database operation.',
++      possibleSolutions: [
++        'Check the database connection',
++        'Verify that the database structure matches your code expectations',
++        'Look for syntax errors in your query'
++      ],
++      severity: 'medium',
++    })
++  },
++  // API errors
++  {
++    pattern: /fetch|api|endpoint|http|status code/i,
++    translation: () => ({
++      originalError: 'API Error',
++      friendlyMessage: 'There was an error communicating with an API or web service.',
++      possibleSolutions: [
++        'Check that the API endpoint is correct',
++        'Verify that your API key or authentication is valid',
++        'Ensure the API service is online and functioning'
++      ],
++      severity: 'medium',
++    })
++  },
++  // File system errors
++  {
++    pattern: /ENOENT: no such file or directory, (.+)/i,
++    translation: (matches) => ({
++      originalError: matches[0],
++      friendlyMessage: `The file or directory "${matches[1]}" doesn't exist.`,
++      possibleSolutions: [
++        'Check if the file path is correct',
++        'Make sure the file hasn\'t been deleted',
++        'Verify file permissions'
++      ],
++      severity: 'medium',
++    })
++  },
++  // Default fallback for generic errors
++  {
++    pattern: /.*/,
++    translation: (matches) => ({
++      originalError: matches[0],
++      friendlyMessage: 'An error occurred.',
++      possibleSolutions: [
++        'Check application logs for more details',
++        'Try restarting the application',
++        'Look for recent code changes that might have caused this issue'
++      ],
++      severity: 'low',
++    })
++  }
++];
++
++/**
++ * Translate a technical error message into a more developer-friendly format
++ */
++export function translateError(errorMessage: string): ErrorTranslation {
++  // If no error message is provided, return a generic translation
++  if (!errorMessage) {
++    return {
++      originalError: 'Unknown error',
++      friendlyMessage: 'An unknown error occurred.',
++      possibleSolutions: [
++        'Check application logs for more details',
++        'Try again after a few moments'
++      ],
++      severity: 'medium',
++    };
++  }
++
++  // Find the first matching pattern and translate the error
++  for (const { pattern, translation } of errorPatterns) {
++    const matches = errorMessage.match(pattern);
++    if (matches) {
++      return translation(matches);
++    }
++  }
++
++  // Fallback for truly unrecognized errors
++  return {
++    originalError: errorMessage,
++    friendlyMessage: 'An unexpected error occurred.',
++    possibleSolutions: [
++      'Check logs for more information',
++      'Consult the documentation',
++      'Report this issue to the development team'
++    ],
++    severity: 'medium',
++  };
++}
++
++/**
++ * Get a color class based on error severity
++ */
++export function getSeverityColorClass(severity: ErrorTranslation['severity']): string {
++  switch (severity) {
++    case 'low':
++      return 'text-blue-600 dark:text-blue-400';
++    case 'medium':
++      return 'text-yellow-600 dark:text-yellow-400';
++    case 'high':
++      return 'text-orange-600 dark:text-orange-400';
++    case 'critical':
++      return 'text-red-600 dark:text-red-400';
++    default:
++      return 'text-gray-600 dark:text-gray-400';
++  }
++}
+\ No newline at end of file
+diff --git a/src/components/Navbar.tsx b/src/components/Navbar.tsx
+new file mode 100644
+index 0000000..5b8134c
+--- /dev/null
++++ b/src/components/Navbar.tsx
+@@ -0,0 +1 @@
++// Navigation bar component
+\ No newline at end of file
+diff --git a/src/contexts/AuthContext.tsx b/src/contexts/AuthContext.tsx
+new file mode 100644
+index 0000000..6130e9f
+--- /dev/null
++++ b/src/contexts/AuthContext.tsx
+@@ -0,0 +1 @@
++// Auth context for managing user state
+\ No newline at end of file
+diff --git a/src/hooks/useAuth.ts b/src/hooks/useAuth.ts
+new file mode 100644
+index 0000000..41c38e7
+--- /dev/null
++++ b/src/hooks/useAuth.ts
+@@ -0,0 +1 @@
++// Hook for authentication
+\ No newline at end of file
+diff --git a/src/lib/supabaseClient.ts b/src/lib/supabaseClient.ts
+new file mode 100644
+index 0000000..76f722b
+--- /dev/null
++++ b/src/lib/supabaseClient.ts
+@@ -0,0 +1 @@
++// Supabase client config
+\ No newline at end of file
+diff --git a/src/pages/index.tsx b/src/pages/index.tsx
+new file mode 100644
+index 0000000..b6d3fde
+--- /dev/null
++++ b/src/pages/index.tsx
+@@ -0,0 +1 @@
++// Home page
+\ No newline at end of file
+diff --git a/src/utils/helpers.ts b/src/utils/helpers.ts
+new file mode 100644
+index 0000000..22a227c
+--- /dev/null
++++ b/src/utils/helpers.ts
+@@ -0,0 +1 @@
++// Utility functions
+\ No newline at end of file
+diff --git a/styles/globals.css b/styles/globals.css
+new file mode 100644
+index 0000000..b6724a1
+--- /dev/null
++++ b/styles/globals.css
+@@ -0,0 +1 @@
++/* Global styles */
+\ No newline at end of file
+diff --git a/supabase_full_config.sql b/supabase_full_config.sql
+new file mode 100644
+index 0000000..e2339c5
+--- /dev/null
++++ b/supabase_full_config.sql
+@@ -0,0 +1,115 @@
++-- Supabase Schema Setup --
++
++-- Users table
++create table if not exists users (
++  id uuid primary key default gen_random_uuid(),
++  email text unique not null,
++  full_name text,
++  role text check (role in ('staff', 'manager', 'admin', 'dev')),
++  profile_photo_url text,
++  created_at timestamp default now()
++);
++
++-- Venues
++create table if not exists venues (
++  id uuid primary key default gen_random_uuid(),
++  name text not null,
++  address text,
++  lat double precision,
++  lng double precision,
++  created_at timestamp default now()
++);
++
++-- Shifts
++create table if not exists shifts (
++  id uuid primary key default gen_random_uuid(),
++  user_id uuid references users(id),
++  venue_id uuid references venues(id),
++  start_time timestamp,
++  end_time timestamp,
++  status text check (status in ('scheduled', 'completed', 'missed')),
++  created_at timestamp default now()
++);
++
++-- Clock-in logs
++create table if not exists clock_logs (
++  id uuid primary key default gen_random_uuid(),
++  user_id uuid references users(id),
++  venue_id uuid references venues(id),
++  clock_in timestamp,
++  clock_out timestamp,
++  lat double precision,
++  lng double precision,
++  out_of_bounds boolean default false,
++  created_at timestamp default now()
++);
++
++-- Messages
++create table if not exists messages (
++  id uuid primary key default gen_random_uuid(),
++  sender_id uuid references users(id),
++  receiver_id uuid references users(id),
++  message text,
++  attachment_url text,
++  created_at timestamp default now()
++);
++
++-- Pay stubs
++create table if not exists paystubs (
++  id uuid primary key default gen_random_uuid(),
++  user_id uuid references users(id),
++  hours_worked numeric,
++  pay_rate numeric,
++  total_pay numeric,
++  stub_url text,
++  issued_at timestamp default now()
++);
++
++
++-- RLS Policies --
++
++-- Enable RLS
++alter table users enable row level security;
++alter table shifts enable row level security;
++alter table venues enable row level security;
++alter table messages enable row level security;
++alter table paystubs enable row level security;
++alter table clock_logs enable row level security;
++
++-- Policies for users
++create policy "Users can read their own profile"
++on users for select
++using (auth.uid() = id);
++
++-- Policies for shifts
++create policy "Staff can view their shifts"
++on shifts for select
++using (auth.uid() = user_id);
++
++create policy "Managers/Admins can insert/edit shifts"
++on shifts for insert, update
++using (exists (select 1 from users u where u.id = auth.uid() and u.role in ('manager', 'admin')));
++
++-- Policies for venues
++create policy "Anyone can view venues"
++on venues for select
++using (true);
++
++create policy "Only Admins can edit venues"
++on venues for insert, update, delete
++using (exists (select 1 from users u where u.id = auth.uid() and u.role = 'admin'));
++
++-- Policies for messages
++create policy "Users can read/send their messages"
++on messages for select, insert
++using (auth.uid() = sender_id or auth.uid() = receiver_id);
++
++-- Policies for paystubs
++create policy "Users can read their paystubs"
++on paystubs for select
++using (auth.uid() = user_id);
++
++-- Policies for clock_logs
++create policy "Users can create and read their clock logs"
++on clock_logs for select, insert
++using (auth.uid() = user_id);
+diff --git a/supabase_rbac_policies.sql b/supabase_rbac_policies.sql
+new file mode 100644
+index 0000000..08a2295
+--- /dev/null
++++ b/supabase_rbac_policies.sql
+@@ -0,0 +1,46 @@
++
++-- Enable RLS
++alter table users enable row level security;
++alter table shifts enable row level security;
++alter table venues enable row level security;
++alter table messages enable row level security;
++alter table paystubs enable row level security;
++alter table clock_logs enable row level security;
++
++-- Policies for users
++create policy "Users can read their own profile"
++on users for select
++using (auth.uid() = id);
++
++-- Policies for shifts
++create policy "Staff can view their shifts"
++on shifts for select
++using (auth.uid() = user_id);
++
++create policy "Managers/Admins can insert/edit shifts"
++on shifts for insert, update
++using (exists (select 1 from users u where u.id = auth.uid() and u.role in ('manager', 'admin')));
++
++-- Policies for venues
++create policy "Anyone can view venues"
++on venues for select
++using (true);
++
++create policy "Only Admins can edit venues"
++on venues for insert, update, delete
++using (exists (select 1 from users u where u.id = auth.uid() and u.role = 'admin'));
++
++-- Policies for messages
++create policy "Users can read/send their messages"
++on messages for select, insert
++using (auth.uid() = sender_id or auth.uid() = receiver_id);
++
++-- Policies for paystubs
++create policy "Users can read their paystubs"
++on paystubs for select
++using (auth.uid() = user_id);
++
++-- Policies for clock_logs
++create policy "Users can create and read their clock logs"
++on clock_logs for select, insert
++using (auth.uid() = user_id);
+diff --git a/supabase_schema.sql b/supabase_schema.sql
+new file mode 100644
+index 0000000..5f3b644
+--- /dev/null
++++ b/supabase_schema.sql
+@@ -0,0 +1,65 @@
++
++-- Users table
++create table if not exists users (
++  id uuid primary key default gen_random_uuid(),
++  email text unique not null,
++  full_name text,
++  role text check (role in ('staff', 'manager', 'admin', 'dev')),
++  profile_photo_url text,
++  created_at timestamp default now()
++);
++
++-- Venues
++create table if not exists venues (
++  id uuid primary key default gen_random_uuid(),
++  name text not null,
++  address text,
++  lat double precision,
++  lng double precision,
++  created_at timestamp default now()
++);
++
++-- Shifts
++create table if not exists shifts (
++  id uuid primary key default gen_random_uuid(),
++  user_id uuid references users(id),
++  venue_id uuid references venues(id),
++  start_time timestamp,
++  end_time timestamp,
++  status text check (status in ('scheduled', 'completed', 'missed')),
++  created_at timestamp default now()
++);
++
++-- Clock-in logs
++create table if not exists clock_logs (
++  id uuid primary key default gen_random_uuid(),
++  user_id uuid references users(id),
++  venue_id uuid references venues(id),
++  clock_in timestamp,
++  clock_out timestamp,
++  lat double precision,
++  lng double precision,
++  out_of_bounds boolean default false,
++  created_at timestamp default now()
++);
++
++-- Messages
++create table if not exists messages (
++  id uuid primary key default gen_random_uuid(),
++  sender_id uuid references users(id),
++  receiver_id uuid references users(id),
++  message text,
++  attachment_url text,
++  created_at timestamp default now()
++);
++
++-- Pay stubs
++create table if not exists paystubs (
++  id uuid primary key default gen_random_uuid(),
++  user_id uuid references users(id),
++  hours_worked numeric,
++  pay_rate numeric,
++  total_pay numeric,
++  stub_url text,
++  issued_at timestamp default now()
++);
+diff --git a/types/user.ts b/types/user.ts
+new file mode 100644
+index 0000000..6a00cef
+--- /dev/null
++++ b/types/user.ts
+@@ -0,0 +1 @@
++// User-related TypeScript types
+\ No newline at end of file
+-- 
+2.39.5
+
