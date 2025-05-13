@@ -1,0 +1,40 @@
+name: Auto Fix Errors
+
+on:
+  workflow_run:
+    workflows: ["Main Workflow"]
+    types:
+      - completed
+
+jobs:
+  check-failed-runs:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log failed jobs
+        run: |
+          echo "Detecting failed jobs..."
+          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}/jobs > jobs.json
+          # Log failed job names
+          jq '.jobs[] | select(.conclusion == "failure") | .name' jobs.json
+
+      - name: Attempt fixes
+        run: |
+          set -e
+          echo "Running scripts to attempt fixes..."
+          npm install || { echo "npm install failed"; exit 1; }
+          npm run lint --fix || { echo "Linting failed"; exit 1; }
+          npm test || { echo "Tests failed"; exit 1; }
+
+      - name: Re-run workflow
+        run: |
+          echo "Re-running workflow..."
+          curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+               -H "Accept: application/vnd.github.v3+json" \
+               https://api.github.com/repos/${{ github.repository }}/actions/workflows/main-workflow.yml/dispatches \
+               -d '{"ref":"main"}'
