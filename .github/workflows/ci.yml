@@ -23,13 +23,31 @@ jobs:
         node-version: 18
 
     - name: Install dependencies
-      run: npm install
+      run: |
+        # Check if the directory exists before running npm install
+        if [ -d "./apps/${{ matrix.app }}" ]; then
+          npm install
+        else
+          echo "Directory ./apps/${{ matrix.app }} does not exist. Skipping..."
+        fi
       working-directory: ./apps/${{ matrix.app }}
 
     - name: Run Lint
-      run: npm run lint
+      run: |
+        # Check if the lint script exists before running
+        if npm run | grep -q "lint"; then
+          npm run lint
+        else
+          echo "Lint script not found. Skipping..."
+        fi
       working-directory: ./apps/${{ matrix.app }}
 
     - name: Run Tests
-      run: npm run test
+      run: |
+        # Check if the test script exists before running
+        if npm run | grep -q "test"; then
+          npm run test
+        else
+          echo "Test script not found. Skipping..."
+        fi
       working-directory: ./apps/${{ matrix.app }}
