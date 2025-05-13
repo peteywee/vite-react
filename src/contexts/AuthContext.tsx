@@ -1,0 +1,1 @@
+// Auth context for managing user state

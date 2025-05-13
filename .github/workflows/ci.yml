@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [staffflow-core, mobile-app, admin-panel, dev-tools, messaging-module]
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: ./apps/${{ matrix.app }}
+
+    - name: Run Lint
+      run: npm run lint
+      working-directory: ./apps/${{ matrix.app }}
+
+    - name: Run Tests
+      run: npm run test
+      working-directory: ./apps/${{ matrix.app }}
