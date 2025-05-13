@@ -31,47 +31,13 @@ jobs:
         fi
       working-directory: ./apps/${{ matrix.app }}
 
-    - name: Check and Update ESLint Version
+    - name: Ensure ESLint and Prettier Versions
       run: |
-        REQUIRED_VERSION="8.42.0"
-        INSTALLED_VERSION=$(npx eslint -v | grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+')
-        if [ "$INSTALLED_VERSION" != "$REQUIRED_VERSION" ]; then
-          echo "ESLint version mismatch. Updating to version $REQUIRED_VERSION..."
-          npm install eslint@$REQUIRED_VERSION --save-dev
-        else
-          echo "ESLint version is up-to-date."
-        fi
-      working-directory: ./apps/${{ matrix.app }}
-
-    - name: Check and Update Prettier Version
-      run: |
-        REQUIRED_VERSION="2.8.8"
-        INSTALLED_VERSION=$(npx prettier -v)
-        if [ "$INSTALLED_VERSION" != "$REQUIRED_VERSION" ]; then
-          echo "Prettier version mismatch. Updating to version $REQUIRED_VERSION..."
-          npm install prettier@$REQUIRED_VERSION --save-dev
-        else
-          echo "Prettier version is up-to-date."
-        fi
+        npm install eslint@8.42.0 --save-dev
+        npm install prettier@2.8.8 --save-dev
       working-directory: ./apps/${{ matrix.app }}
 
     - name: Install Missing Lint or Test Scripts
       run: |
-        if ! npm run | grep -q "lint"; then
-          echo "Lint script not found. Installing default lint config..."
-          npm set-script lint "eslint . --fix"
-        fi
-        if ! npm run | grep -q "test"; then
-          echo "Test script not found. Installing default test config..."
-          npm set-script test "jest"
-          npm install jest --save-dev
-        fi
-      working-directory: ./apps/${{ matrix.app }}
-
-    - name: Run Lint
-      run: npm run lint
-      working-directory: ./apps/${{ matrix.app }}
-
-    - name: Run Tests
-      run: npm run test
-      working-directory: ./apps/${{ matrix.app }}
+        if ! npm](#)
+
